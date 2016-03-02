@@ -1,4 +1,4 @@
-# simplifr
+# simplifr [![NPM Version](http://img.shields.io/npm/v/simplifr.svg?style=flat)](https://www.npmjs.org/package/simplifr)
 Simplify any JSON data into a flat single-level key-value structure.
 It's designed for React/Redux apps. 
 

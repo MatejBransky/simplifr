@@ -1,11 +1,12 @@
 {
   "name": "simplifr",
   "version": "0.0.1",
-  "description": "Simplify any JSON into flat key-value structure",
+  "description": "Simplify any JSON into flat single-level key-value structure. Designed for React/Redux apps.",
   "keywords": [
     "simplify",
     "redux",
-    "json"
+    "json",
+    "react"
   ],
   "homepage": "https://github.com/krispo/simplifr",
   "license": "MIT",
