@@ -1,0 +1,32 @@
+{
+  "name": "simplifr",
+  "version": "0.0.1",
+  "description": "Simplify any JSON into flat key-value structure",
+  "keywords": [
+    "simplify",
+    "redux",
+    "json"
+  ],
+  "homepage": "https://github.com/krispo/simplifr",
+  "license": "MIT",
+  "main": "build/simplifr.js",
+  "jsnext:main": "index",
+  "scripts": {
+    "uglify": "uglifyjs build/simplifr.js -c -m -o build/simplifr.min.js",
+    "build": "mkdir -p build && rollup -f umd -n simplifr -o build/simplifr.js -- index.js && npm run uglify",
+    "pretest": "npm run build",
+    "test": "faucet test/*-test.js",
+    "prepublish": "npm run build"
+  },
+  "author": "Konstantin Skipor",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/krispo/simplifr.git"
+  },
+  "devDependencies": {
+    "faucet": "0.0.1",
+    "rollup": "^0.25.4",
+    "tape": "^4.4.0",
+    "uglify-js": "^2.6.1"
+  }
+}

@@ -1,0 +1,1 @@
+export {default as simplify} from './src/simplifr';
