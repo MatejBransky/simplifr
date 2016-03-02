@@ -9,7 +9,10 @@ test('simplifr tests', function(t){
       key2: 'val2',
     }
     var res = {
-      root: ['root_key1', 'root_key2'],
+      root: {
+        type: 'object',
+        childs: ['root_key1', 'root_key2']
+      },
       root_key1: 'val1',
       root_key2: 'val2',
     }
@@ -23,9 +26,15 @@ test('simplifr tests', function(t){
       key2: [1,2,3]
     }
     var res = {
-      root: ['root_key1', 'root_key2'],
+      root: {
+        type: 'object',
+        childs: ['root_key1', 'root_key2']
+      },
       root_key1: 'val1',
-      root_key2: ['root_key2_0', 'root_key2_1', 'root_key2_2'],
+      root_key2: {
+        type: 'array',
+        childs: ['root_key2_0', 'root_key2_1', 'root_key2_2']
+      },
       root_key2_0: 1,
       root_key2_1: 2,
       root_key2_2: 3
@@ -40,9 +49,15 @@ test('simplifr tests', function(t){
       key2: [1,2,3]
     }
     var res = {
-      'root': ['root.key1', 'root.key2'],
+      'root': {
+        type: 'object',
+        childs: ['root.key1', 'root.key2']
+      },
       'root.key1': 'val1',
-      'root.key2': ['root.key2.0', 'root.key2.1', 'root.key2.2'],
+      'root.key2': {
+        type: 'array',
+        childs: ['root.key2.0', 'root.key2.1', 'root.key2.2']
+      },
       'root.key2.0': 1,
       'root.key2.1': 2,
       'root.key2.2': 3

@@ -18,9 +18,15 @@ Suppose we have a json
 It will be simplified into
 ```js
 {
-  root: ['root_key1', 'root_key2'],
+  root: {
+    type: 'object',
+    childs: ['root_key1', 'root_key2']
+  },
   root_key1: 'val1',
-  root_key2: ['root_key2_0', 'root_key2_1', 'root_key2_2'],
+  root_key2: {
+    type: 'array',
+    childs: ['root_key2_0', 'root_key2_1', 'root_key2_2']
+  },
   root_key2_0: 1,
   root_key2_1: 2,
   root_key2_2: 3

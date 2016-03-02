@@ -1,6 +1,6 @@
 {
   "name": "simplifr",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Simplifies JSON into flat single-level key-value structure. Designed for React/Redux apps.",
   "keywords": [
     "simplify",

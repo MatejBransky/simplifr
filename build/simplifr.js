@@ -14,12 +14,16 @@
     return data;
 
     function dive(json, path){
-      data[path] = [];
+      data[path] = {
+        type: 'object',
+        childs: []
+      };
 
       if (isArray(json)) {
+        data[path].type = 'array';
         for (var i = -1, l = json.length; ++i < l;) {
           var next = path + dilimiter + i;
-          data[path].push(next);
+          data[path].childs.push(next);
           dive(json[i], next);
         }
       }
@@ -27,7 +31,7 @@
         for (var key in json) {
           if (json.hasOwnProperty(key)) {
             var next = path + dilimiter + key;
-            data[path].push(next);
+            data[path].childs.push(next);
             dive(json[key], next);
           }
         }
