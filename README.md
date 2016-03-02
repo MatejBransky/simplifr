@@ -2,6 +2,10 @@
 Simplify any JSON data into a flat single-level key-value structure.
 It's designed for React/Redux apps. 
 
+## Install
+
+    npm install --save simplifr
+
 ## Example
 Suppose we have a json
 ```js
@@ -23,6 +27,36 @@ It will be simplified into
 }
 ```
 
+## Usage with React/Redux
+
+```js
+import { simplify } from 'simplifr';
+```       
+Transform the json data
+          
+```js
+// our source data
+const json = {*some json data*}
+
+// define simplified data
+const simplifiedData = simplify(json)    
+```
+
+Then, use it in Redux app as a store data 
+```js
+const store = configureStore(simplifiedData)
+
+render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.getElementById('root')
+)
+```
+
+## Test
+
+    npm test
 
 ## Licence
 MIT
