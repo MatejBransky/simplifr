@@ -1,5 +1,6 @@
 # simplifr
-Simplify any JSON data into the simplest single level key-value structure.
+Simplify any JSON data into a flat single-level key-value structure.
+It's designed for React/Redux apps. 
 
 ## Example
 Suppose we have a json

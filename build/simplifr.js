@@ -6,13 +6,14 @@
 
   var data = {};
 
-  function simplify(json, path){
+  function simplify(json, path, dilimiter){
     path = path || 'root';
+    dilimiter = dilimiter || '_';
     data[path] = [];
 
     if (isArray(json)) {
       for (var i = -1, l = json.length; ++i < l;) {
-        var next = path + '_' + i;
+        var next = path + dilimiter + i;
         data[path].push(next);
         simplify(json[i], next);
       }
@@ -20,7 +21,7 @@
     else if (isObject(json)) {
       for (var key in json) {
         if (json.hasOwnProperty(key)) {
-          var next = path + '_' + key;
+          var next = path + dilimiter + key;
           data[path].push(next);
           simplify(json[key], next);
         }
