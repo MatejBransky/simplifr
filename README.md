@@ -1,5 +1,5 @@
 # simplifr [![NPM Version](http://img.shields.io/npm/v/simplifr.svg?style=flat)](https://www.npmjs.org/package/simplifr)
-Simplifies arbitrary JSON data into a flat single-level key-value structure.
+Simplifies arbitrary JSON data into a flat single-level (path -> description) structure.
 It's designed for React/Redux apps. 
 
 ## Install
@@ -20,12 +20,12 @@ It will be simplified into
 {
   root: {
     type: 'object',
-    childs: ['root_key1', 'root_key2']
+    childs: ['key1', 'key2']
   },
   root_key1: 'val1',
   root_key2: {
     type: 'array',
-    childs: ['root_key2_0', 'root_key2_1', 'root_key2_2']
+    length: 3
   },
   root_key2_0: 1,
   root_key2_1: 2,
