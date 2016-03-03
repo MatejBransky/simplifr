@@ -6,30 +6,26 @@
 
   function simplify(json, dilimiter){
     var data = {};
-
-    dilimiter = dilimiter || '_';
+    dilimiter = dilimiter || '.';
 
     dive(json, 'root');
 
     return data;
 
     function dive(json, path){
+      data[path] = {
+        type: 'object',
+        childs: []
+      };
 
       if (isArray(json)) {
-        var l = json.length;
-        data[path] = {
-          type: 'array',
-          length: l
-        };
-        for (var i = -1; ++i < l;) {
+        data[path].type = 'array';
+        for (var i = -1, l = json.length; ++i < l;) {
+          data[path].childs.push(i);
           dive(json[i], path + dilimiter + i);
         }
       }
       else if (isObject(json)) {
-        data[path] = {
-          type: 'object',
-          childs: []
-        };
         for (var key in json) {
           if (json.hasOwnProperty(key)) {
             data[path].childs.push(key);

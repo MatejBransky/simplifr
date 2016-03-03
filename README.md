@@ -22,14 +22,14 @@ It will be simplified into
     type: 'object',
     childs: ['key1', 'key2']
   },
-  root_key1: 'val1',
-  root_key2: {
+  'root.key1': 'val1',
+  'root.key2': {
     type: 'array',
-    length: 3
+    childs: [0, 1, 2]
   },
-  root_key2_0: 1,
-  root_key2_1: 2,
-  root_key2_2: 3
+  'root.key2.0': 1,
+  'root.key2.1': 2,
+  'root.key2.2': 3
 }
 ```
 
