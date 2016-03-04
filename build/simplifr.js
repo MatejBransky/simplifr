@@ -89,6 +89,15 @@
     return data;
   }
 
+  function reset(data, path, dilimiter){
+    dilimiter = dilimiter || defaults().dilimiter;
+
+    removeChildNode(data, path, dilimiter);
+    data[path] = null;
+
+    return data;
+  }
+
   function removeChildNode(data, path, dilimiter){
     dilimiter = dilimiter || defaults().dilimiter;
     var node = data[path];
@@ -115,5 +124,6 @@
   exports.simplify = simplify;
   exports.add = add;
   exports.remove = remove;
+  exports.reset = reset;
 
 }));

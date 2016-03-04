@@ -82,6 +82,15 @@ export function remove(data, path, dilimiter){
   return data;
 }
 
+export function reset(data, path, dilimiter){
+  dilimiter = dilimiter || defaults().dilimiter;
+
+  removeChildNode(data, path, dilimiter);
+  data[path] = null;
+
+  return data;
+}
+
 function removeChildNode(data, path, dilimiter){
   dilimiter = dilimiter || defaults().dilimiter;
   var node = data[path];

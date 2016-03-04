@@ -1,1 +1,1 @@
-export {simplify, add, remove} from './src/simplifr';
+export {simplify, add, remove, reset} from './src/simplifr';
