@@ -48,8 +48,11 @@ export function add(data, path, obj, dilimiter){
 
   if (node.type === 'array') {
     var max = Math.max.apply(null, node.childs);
-    node.childs.push(++max);
-    simplify(obj, dilimiter, path + dilimiter + max, data);
+    if (!isArray(obj)) obj = [obj];
+    obj.forEach(function(d){
+      node.childs.push(++max);
+      simplify(d, dilimiter, path + dilimiter + max, data);
+    });
   }
 
   else if (node.type === 'object') {
@@ -60,6 +63,14 @@ export function add(data, path, obj, dilimiter){
     });
   }
 
+  return data;
+}
+
+function update(data, path, value){
+  return data;
+}
+
+function remove(data, path){
   return data;
 }
 

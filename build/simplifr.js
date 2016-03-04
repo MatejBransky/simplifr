@@ -54,8 +54,11 @@
 
     if (node.type === 'array') {
       var max = Math.max.apply(null, node.childs);
-      node.childs.push(++max);
-      simplify(obj, dilimiter, path + dilimiter + max, data);
+      if (!isArray(obj)) obj = [obj];
+      obj.forEach(function(d){
+        node.childs.push(++max);
+        simplify(d, dilimiter, path + dilimiter + max, data);
+      });
     }
 
     else if (node.type === 'object') {
