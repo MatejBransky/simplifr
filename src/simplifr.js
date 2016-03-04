@@ -1,10 +1,15 @@
-export default simplify;
+function defaults(){
+  return {
+    dilimiter: '.'
+  }
+}
 
-function simplify(json, dilimiter){
-  var data = {};
-  dilimiter = dilimiter || '.';
+export function simplify(json, dilimiter, root, data){
+  data = data || {};
+  root = root || 'root';
+  dilimiter = dilimiter || defaults().dilimiter;
 
-  dive(json, 'root');
+  dive(json, root);
 
   return data;
 
@@ -21,6 +26,7 @@ function simplify(json, dilimiter){
         dive(json[i], path + dilimiter + i);
       }
     }
+
     else if (isObject(json)) {
       for (var key in json) {
         if (json.hasOwnProperty(key)) {
@@ -29,10 +35,32 @@ function simplify(json, dilimiter){
         }
       }
     }
+
     else data[path] = json;
 
     return data;
   }
+}
+
+export function add(data, path, obj, dilimiter){
+  dilimiter = dilimiter || defaults().dilimiter;
+  var node = data[path];
+
+  if (node.type === 'array') {
+    var max = Math.max.apply(null, node.childs);
+    node.childs.push(++max);
+    simplify(obj, dilimiter, path + dilimiter + max, data);
+  }
+
+  else if (node.type === 'object') {
+    var keys = Object.keys(obj);
+    keys.forEach(function(key){
+      node.childs.push(key);
+      simplify(obj[key], dilimiter, path + dilimiter + key, data);
+    });
+  }
+
+  return data;
 }
 
 function isArray(_) {

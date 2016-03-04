@@ -4,11 +4,18 @@
   (factory((global.simplifr = global.simplifr || {})));
 }(this, function (exports) { 'use strict';
 
-  function simplify(json, dilimiter){
-    var data = {};
-    dilimiter = dilimiter || '.';
+  function defaults(){
+    return {
+      dilimiter: '.'
+    }
+  }
 
-    dive(json, 'root');
+  function simplify(json, dilimiter, root, data){
+    data = data || {};
+    root = root || 'root';
+    dilimiter = dilimiter || defaults().dilimiter;
+
+    dive(json, root);
 
     return data;
 
@@ -25,6 +32,7 @@
           dive(json[i], path + dilimiter + i);
         }
       }
+
       else if (isObject(json)) {
         for (var key in json) {
           if (json.hasOwnProperty(key)) {
@@ -33,10 +41,32 @@
           }
         }
       }
+
       else data[path] = json;
 
       return data;
     }
+  }
+
+  function add(data, path, obj, dilimiter){
+    dilimiter = dilimiter || defaults().dilimiter;
+    var node = data[path];
+
+    if (node.type === 'array') {
+      var max = Math.max.apply(null, node.childs);
+      node.childs.push(++max);
+      simplify(obj, dilimiter, path + dilimiter + max, data);
+    }
+
+    else if (node.type === 'object') {
+      var keys = Object.keys(obj);
+      keys.forEach(function(key){
+        node.childs.push(key);
+        simplify(obj[key], dilimiter, path + dilimiter + key, data);
+      });
+    }
+
+    return data;
   }
 
   function isArray(_) {
@@ -48,5 +78,6 @@
   }
 
   exports.simplify = simplify;
+  exports.add = add;
 
 }));

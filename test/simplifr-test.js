@@ -1,5 +1,6 @@
 var test = require('tape'),
-  simplify = require('../').simplify;
+  simplify = require('../').simplify,
+  add = require('../').add;
 
 test('simplifr tests', function(t){
 
@@ -63,6 +64,74 @@ test('simplifr tests', function(t){
       root_key2_2: 3
     }
     t.deepEqual(simplify(json, '_'), res)
+    t.end();
+  });
+
+  t.test('add simple node to the object ', function(t){
+    var json = {
+      foo: {
+        bar: {
+          buz: 3
+        }
+      }
+    };
+    var path = 'root.foo.bar';
+    var obj =  { tat: 5 };
+
+    // add `obj` to the `path` node
+    // the result is equivalent to
+    //{
+    //  foo: {
+    //    bar: {
+    //      buz: 3,
+    //      tat: 5
+    //    }
+    //  }
+    //}
+    var res = {
+      'root': { type: 'object', childs: ['foo']},
+      'root.foo': { type: 'object', childs: ['bar']},
+      'root.foo.bar': { type: 'object', childs: ['buz', 'tat']},
+      'root.foo.bar.buz': 3,
+      'root.foo.bar.tat': 5
+    }
+    var data = simplify(json);
+    t.deepEqual(add(data, path, obj), res);
+    t.deepEqual(data, res);
+    t.end();
+  });
+
+  t.test('add simple node to the array ', function(t){
+    var json = {
+      foo: {
+        bar: [
+          'buz', 'tat'
+        ]
+      }
+    };
+    var path = 'root.foo.bar';
+    var obj =  'sat';
+
+    // add `obj` to the `path` node
+    // the result is equivalent to
+    //{
+    //  foo: {
+    //    bar: [
+    //      'buz', 'tat', 'sat'
+    //    ]
+    //  }
+    //}
+    var res = {
+      'root': { type: 'object', childs: ['foo']},
+      'root.foo': { type: 'object', childs: ['bar']},
+      'root.foo.bar': { type: 'array', childs: [0, 1, 2]},
+      'root.foo.bar.0': 'buz',
+      'root.foo.bar.1': 'tat',
+      'root.foo.bar.2': 'sat'
+    }
+    var data = simplify(json);
+    t.deepEqual(add(data, path, obj), res);
+    t.deepEqual(data, res);
     t.end();
   });
 
