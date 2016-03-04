@@ -14,7 +14,7 @@
   "jsnext:main": "index",
   "scripts": {
     "uglify": "uglifyjs build/simplifr.js -c -m -o build/simplifr.min.js",
-    "build": "mkdir -p build && rollup -f umd -n simplifr -o build/simplifr.js -- index.js && npm run uglify",
+    "build": "mkdir -p build && VERSION=`node -e 'console.log(require(\"./package.json\").version)'` && rollup -f umd -n simplifr --banner \"/* Simplifr, v${VERSION} */\" -o build/simplifr.js -- index.js && npm run uglify",
     "pretest": "npm run build",
     "test": "faucet test/*-test.js",
     "prepublish": "npm run build"
