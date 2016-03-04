@@ -73,6 +73,12 @@
     return data;
   }
 
+  function update(data, path, obj, dilimiter){
+    reset(data, path, dilimiter);
+    simplify(obj, dilimiter, path, data);
+    return data;
+  }
+
   function remove(data, path, dilimiter){
     dilimiter = dilimiter || defaults().dilimiter;
     var pathSeq = path.split(dilimiter);
@@ -123,6 +129,7 @@
 
   exports.simplify = simplify;
   exports.add = add;
+  exports.update = update;
   exports.remove = remove;
   exports.reset = reset;
 

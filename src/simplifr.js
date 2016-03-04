@@ -66,6 +66,12 @@ export function add(data, path, obj, dilimiter){
   return data;
 }
 
+export function update(data, path, obj, dilimiter){
+  reset(data, path, dilimiter);
+  simplify(obj, dilimiter, path, data);
+  return data;
+}
+
 export function remove(data, path, dilimiter){
   dilimiter = dilimiter || defaults().dilimiter;
   var pathSeq = path.split(dilimiter);
