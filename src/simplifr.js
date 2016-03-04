@@ -66,11 +66,34 @@ export function add(data, path, obj, dilimiter){
   return data;
 }
 
-function update(data, path, value){
+export function remove(data, path, dilimiter){
+  dilimiter = dilimiter || defaults().dilimiter;
+  var pathSeq = path.split(dilimiter);
+  var key = pathSeq.pop();
+  var parentNode = pathSeq.length ? data[pathSeq.join(dilimiter)] : data;
+
+  if (parentNode.type === 'array') key = +key;
+
+  var idx = parentNode.childs.indexOf(key);
+  if (idx > -1) parentNode.childs.splice(idx, 1);
+
+  removeChildNode(data, path, dilimiter);
+
   return data;
 }
 
-function remove(data, path){
+function removeChildNode(data, path, dilimiter){
+  dilimiter = dilimiter || defaults().dilimiter;
+  var node = data[path];
+
+  if (node.type === 'array' || node.type === 'object') {
+    node.childs.forEach(function(key){
+      removeChildNode(data, path + dilimiter + key);
+    });
+  }
+
+  delete data[path];
+
   return data;
 }
 

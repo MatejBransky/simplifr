@@ -72,6 +72,37 @@
     return data;
   }
 
+  function remove(data, path, dilimiter){
+    dilimiter = dilimiter || defaults().dilimiter;
+    var pathSeq = path.split(dilimiter);
+    var key = pathSeq.pop();
+    var parentNode = pathSeq.length ? data[pathSeq.join(dilimiter)] : data;
+
+    if (parentNode.type === 'array') key = +key;
+
+    var idx = parentNode.childs.indexOf(key);
+    if (idx > -1) parentNode.childs.splice(idx, 1);
+
+    removeChildNode(data, path, dilimiter);
+
+    return data;
+  }
+
+  function removeChildNode(data, path, dilimiter){
+    dilimiter = dilimiter || defaults().dilimiter;
+    var node = data[path];
+
+    if (node.type === 'array' || node.type === 'object') {
+      node.childs.forEach(function(key){
+        removeChildNode(data, path + dilimiter + key);
+      });
+    }
+
+    delete data[path];
+
+    return data;
+  }
+
   function isArray(_) {
     return Object.prototype.toString.call(_) === '[object Array]';
   }
@@ -82,5 +113,6 @@
 
   exports.simplify = simplify;
   exports.add = add;
+  exports.remove = remove;
 
 }));
