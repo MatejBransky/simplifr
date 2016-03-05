@@ -10,7 +10,7 @@ It's designed for React/Redux/Flux apps. Inspired by [Normalizr](https://github.
    
 [redux-json-tree](https://github.com/krispo/redux-json-tree) - React/Redux app.   
 
-## How it works?
+## How it works
 
 Suppose we have an arbitrary (complex, nested) JSON object
 ```js
@@ -26,7 +26,7 @@ Suppose we have an arbitrary (complex, nested) JSON object
 }
 ```
 We can say that the query `path` to the `levelN` node is `root -> level1 -> level2 -> ... -> levelN`.
-Let's encode this path into a string with `dilimiter='.'`
+Let's encode this `path` into a string with `dilimiter='.'`
 ```js
 'root.level1.level2. ... .levelN'
 ```
@@ -39,7 +39,7 @@ Let's define this as `description` object
   props: 'maybe some props'
 }
 ```
-Notice, that `path` contains all necessary information about parent nodes, while `description` contains all necessary information about child nodes.
+Notice, that `path` contains all necessary meta information about parent nodes, while `description` contains all necessary meta information about child nodes.
   
 Based on this meaning, we can express an abitrary JSON data in terms of `(path, description)` pairs:
 ```js
@@ -65,7 +65,7 @@ For example,
 }
 ```
 
-It will be simplified into
+will be simplified to
 ```js
 {
   'root': { type: 'object', childs: ['foo', 'qux'] },
@@ -78,6 +78,17 @@ It will be simplified into
 }
 ```
 > Currently, the leaf nodes have a simple value instead of `description` object. 
+
+## When it is used
+
+* You work with an arbitrary (complex, nested) JSON data
+* You don't know a schema of your data, or node ID's
+* You want to create an `editable` React components with Flux/Redux/... .
+* You want to save some extra states (or props) for any data node.
+
+Is it [Normalizr](https://github.com/gaearon/normalizr)? No. Normalizr requires schemas, object ID's and works primarily with collections of objects.
+
+Simplifr is schema agnostic and works with arbitrary JSON.
 
 ## Usage with React/Redux
 
