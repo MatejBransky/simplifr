@@ -94,10 +94,6 @@ Simplifr is schema agnostic and works with arbitrary JSON.
 
 Let's create an `editable` react component with JSON data from example above.
 
-`Component1` will edit `bar: 'buz'` node.
-`Component2` will edit the first element in `qux` node.
-`Component3` will edit the last element in `qux` node.
-
 ### Main
 ```js
 import { simplify } from 'simplifr';
@@ -129,27 +125,32 @@ render(
 )
 ```
 
-### Components
-Suppose, main `App` component has 3 child components: `Component1`, `Component2`, `Component3`. 
+### App
+Suppose, main `App` component has 3 child components: `Component`.
+ 
+The first will edit `bar: 'buz'` node. The second will edit the first element in `qux` node. And the last will edit the last element in `qux` node.
+ 
 ```js
 class App extends Component {
   ...
   render(){
     return (
       <div>
-        <Component1 path="root.foo.bar" />
-        <Component2 path="root.qux.0" />
-        <Component3 path="root.qux.2" />
+        <Component path="root.foo.bar" />
+        <Component path="root.qux.0" />
+        <Component path="root.qux.2" />
       </div>
     )
   }
 }
 ```
 
-Let's show how the common Component, Action, Reducer can look like.
+Next, let's show how the common Component, Action, Reducer can look like.
+
+### Component
 
 ```js
-class Component1 extends Component {
+class Component extends React.Component {
   ...
   onChange(e){
       const { updateAction, path } = this.props
@@ -165,7 +166,7 @@ function mapStateToProps(state, props) {
     data: state[props.path]    
   }
 }
-export default connect(mapStateToProps, actions)(Component1)
+export default connect(mapStateToProps, actions)(Component)
 
 ```
 
@@ -182,7 +183,6 @@ function updateAction(path, value){
 
 ### Reducers
 ```js
-// import update
 import {update} from 'simplifr'
 
 function reducer(state = {}, action){
