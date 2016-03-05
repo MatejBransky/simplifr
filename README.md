@@ -92,6 +92,13 @@ Simplifr is schema agnostic and works with arbitrary JSON.
 
 ## Usage with React/Redux
 
+Let's create an `editable` react component with JSON data from example above.
+
+`Component1` will edit `bar: 'buz'` node.
+`Component2` will edit the first element in `qux` node.
+`Component3` will edit the last element in `qux` node.
+
+### Main
 ```js
 import { simplify } from 'simplifr';
 ```       
@@ -99,7 +106,12 @@ Transform the json data
           
 ```js
 // our source data
-const json = {*some json data*}
+const json = {
+  foo: {
+    bar: 'buz'
+  },
+  qux: [ 1, 2, 3 ]
+}
 
 // define simplified data
 const simplifiedData = simplify(json)    
@@ -116,6 +128,78 @@ render(
   document.getElementById('root')
 )
 ```
+
+### Components
+Suppose, main `App` component has 3 child components: `Component1`, `Component2`, `Component3`. 
+```js
+class App extends Component {
+  ...
+  render(){
+    return (
+      <div>
+        <Component1 path="root.foo.bar" />
+        <Component2 path="root.qux.0" />
+        <Component3 path="root.qux.2" />
+      </div>
+    )
+  }
+}
+```
+
+Let's show how the common Component, Action, Reducer can look like.
+
+```js
+class Component1 extends Component {
+  ...
+  onChange(e){
+      const { updateAction, path } = this.props
+      updateAction(path, e.target.value)
+    }
+  render(){     
+    const { data } = this.props
+    return <input value={data} onChange={this.onChange}></input>
+  }
+}
+function mapStateToProps(state, props) { 
+  return {
+    data: state[props.path]    
+  }
+}
+export default connect(mapStateToProps, actions)(Component1)
+
+```
+
+### Actions
+```js
+function updateAction(path, value){
+  return {
+    type: 'UPDATE',
+    path,
+    value
+  }
+}
+```
+
+### Reducers
+```js
+// import update
+import {update} from 'simplifr'
+
+function reducer(state = {}, action){
+  const { path, value } = action
+  switch (action.type) {
+    case 'UPDATE':
+      // use simplifr `update` function
+      // in general, `value` can take any JSON
+      return update(Object.assign({}, state), path, value) 
+    default:
+      return state
+  }
+}
+```  
+
+### Result
+In the result, 3 input fields will be created. Each of them will change the corresponding node value in our simplified JSON.
 
 ## API Reference
 
