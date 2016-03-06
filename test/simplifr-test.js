@@ -997,5 +997,173 @@ test('simplifr tests', function(t){
     t.end();
   });
 
+  // Add complex nodes
+  t.test('addRaw complex single node to the object ', function(t){
+    var data = {
+      foo: {
+        bar: {
+          buz: 3
+        }
+      }
+    };
+    var path = 'root.foo.bar';
+    var obj =  {
+      tat: {
+        sat: {
+          nam: 8
+        },
+        cit: ['om', 'mani']
+      }
+    };
+    var res = {
+      foo: {
+        bar: {
+          buz: 3,
+          tat: {
+            sat: {
+              nam: 8
+            },
+            cit: ['om', 'mani']
+          }
+        }
+      }
+    };
+
+    t.deepEqual(addRaw(data, path, obj), res);
+    t.deepEqual(data, res);
+    t.end();
+  });
+  t.test('addRaw complex nodes to the object ', function(t){
+    var data = {
+      foo: {
+        bar: {
+          buz: 3
+        }
+      }
+    };
+    var path = 'root.foo.bar';
+    var obj =  {
+      tat: {
+        sat: {
+          nam: 8
+        },
+        cit: ['om', 'mani']
+      },
+      tapa: {
+        sat: {
+          nam: 8
+        },
+        cit: ['om', 'mani']
+      }
+    };
+    var res = {
+      foo: {
+        bar: {
+          buz: 3,
+          tat: {
+            sat: {
+              nam: 8
+            },
+            cit: ['om', 'mani']
+          },
+          tapa: {
+            sat: {
+              nam: 8
+            },
+            cit: ['om', 'mani']
+          }
+        }
+      }
+    };
+
+    t.deepEqual(addRaw(data, path, obj), res);
+    t.deepEqual(data, res);
+    t.end();
+  });
+  t.test('addRaw complex single node to the array ', function(t){
+    var data = {
+      foo: {
+        bar: [
+          { buz: 'qux' },
+          { tat: 'sat' }
+        ]
+      }
+    };
+    var path = 'root.foo.bar';
+    var obj = {
+      sat: {
+        nam: 8
+      },
+      cit: ['om', 'mani']
+    };
+    var res = {
+      foo: {
+        bar: [
+          { buz: 'qux' },
+          { tat: 'sat' },
+          {
+            sat: {
+              nam: 8
+            },
+            cit: ['om', 'mani']
+          }
+        ]
+      }
+    };
+
+    t.deepEqual(addRaw(data, path, obj), res);
+    t.deepEqual(data, res);
+    t.end();
+  });
+  t.test('addRaw array of complex nodes to the array ', function(t){
+    var data = {
+      foo: {
+        bar: [
+          { buz: 'qux' },
+          { tat: 'sat' }
+        ]
+      }
+    };
+    var path = 'root.foo.bar';
+    var obj = [
+      {
+        sat: {
+          nam: 8
+        },
+        cit: ['om', 'mani']
+      }, {
+        sat: {
+          nam: 8
+        },
+        cit: ['om', 'mani']
+      }
+    ];
+
+    var res = {
+      foo: {
+        bar: [
+          { buz: 'qux' },
+          { tat: 'sat' },
+          {
+            sat: {
+              nam: 8
+            },
+            cit: ['om', 'mani']
+          },
+          {
+            sat: {
+              nam: 8
+            },
+            cit: ['om', 'mani']
+          }
+        ]
+      }
+    };
+
+    t.deepEqual(addRaw(data, path, obj), res);
+    t.deepEqual(data, res);
+    t.end();
+  });
+
   t.end();
 });
