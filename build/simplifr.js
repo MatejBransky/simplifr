@@ -1,4 +1,4 @@
-/* Simplifr, v0.0.6 */
+/* Simplifr, v0.0.7 */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
   typeof define === 'function' && define.amd ? define(['exports'], factory) :
@@ -154,8 +154,19 @@
     dilimiter = dilimiter || defaults().dilimiter;
     var pathSeq = path.split(dilimiter).slice(1);
 
-    diveRaw(data, pathSeq, function(_node, _key){
-      return _node[_key] = null;
+    diveRaw(data, pathSeq, function(node, key){
+      return node[key] = null;
+    });
+
+    return data;
+  }
+
+  function removeRaw(data, path, dilimiter){
+    dilimiter = dilimiter || defaults().dilimiter;
+    var pathSeq = path.split(dilimiter).slice(1);
+
+    diveRaw(data, pathSeq, function(node, key){
+      return isArray(node) ? (node.splice(+key, 1), node) : delete node[key];
     });
 
     return data;
@@ -185,5 +196,6 @@
   exports.reset = reset;
   exports.addRaw = addRaw;
   exports.resetRaw = resetRaw;
+  exports.removeRaw = removeRaw;
 
 }));

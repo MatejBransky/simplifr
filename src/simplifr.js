@@ -147,8 +147,19 @@ export function resetRaw(data, path, dilimiter){
   dilimiter = dilimiter || defaults().dilimiter;
   var pathSeq = path.split(dilimiter).slice(1);
 
-  diveRaw(data, pathSeq, function(_node, _key){
-    return _node[_key] = null;
+  diveRaw(data, pathSeq, function(node, key){
+    return node[key] = null;
+  });
+
+  return data;
+}
+
+export function removeRaw(data, path, dilimiter){
+  dilimiter = dilimiter || defaults().dilimiter;
+  var pathSeq = path.split(dilimiter).slice(1);
+
+  diveRaw(data, pathSeq, function(node, key){
+    return isArray(node) ? (node.splice(+key, 1), node) : delete node[key];
   });
 
   return data;
