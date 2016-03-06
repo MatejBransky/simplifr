@@ -165,6 +165,17 @@ export function removeRaw(data, path, dilimiter){
   return data;
 }
 
+export function updateRaw(data, path, obj, dilimiter){
+  dilimiter = dilimiter || defaults().dilimiter;
+  var pathSeq = path.split(dilimiter).slice(1);
+
+  diveRaw(data, pathSeq, function(node, key){
+    return node[key] = obj;
+  });
+
+  return data;
+}
+
 function diveRaw(node, pathSeq, action){
   return (pathSeq.length > 1)
     ? diveRaw(node[pathSeq.shift()], pathSeq, action)

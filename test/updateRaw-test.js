@@ -1,11 +1,13 @@
 var test = require('tape'),
-  removeRaw = require('../').removeRaw
+  simplify = require('../').simplify,
+  update = require('../').update,
+  updateRaw = require('../').updateRaw
   ;
 
-test('-= removeRaw tests =-', function(t){
+test('-= updateRaw tests =-', function(t){
 
-  // Remove simple nodes
-  t.test('removeRaw simple node from the object ', function(t){
+  // Update simple nodes
+  t.test('updateRaw simple node in the object ', function(t){
     var data = {
       foo: {
         bar: 'str',
@@ -13,18 +15,20 @@ test('-= removeRaw tests =-', function(t){
       }
     };
     var path = 'root.foo.bar';
+    var obj = 'new value';
     var res = {
       foo: {
+        bar: 'new value',
         buz: 3
       }
     };
 
-    t.deepEqual(removeRaw(data, path), res);
+    t.deepEqual(updateRaw(data, path, obj), res);
     t.deepEqual(data, res);
     t.end();
   });
 
-  t.test('removeRaw simple node from the array ', function(t){
+  t.test('updateRaw simple node in the array ', function(t){
     var data = {
       foo: {
         bar: [
@@ -33,21 +37,22 @@ test('-= removeRaw tests =-', function(t){
       }
     };
     var path = 'root.foo.bar.1';
+    var obj = 'cit';
     var res = {
       foo: {
         bar: [
-          'buz', 'sat'
+          'buz', 'cit', 'sat'
         ]
       }
     };
 
-    t.deepEqual(removeRaw(data, path), res);
+    t.deepEqual(updateRaw(data, path, obj), res);
     t.deepEqual(data, res);
     t.end();
   });
 
-  // Remove complex nodes
-  t.test('removeRaw complex node from the object ', function(t){
+  // Update complex nodes
+  t.test('updateRaw complex node in the object ', function(t){
     var data = {
       foo: {
         bar: {
@@ -62,20 +67,22 @@ test('-= removeRaw tests =-', function(t){
       }
     };
     var path = 'root.foo.bar.tat';
+    var obj = [1, 2, 3];
     var res = {
       foo: {
         bar: {
-          buz: 3
+          buz: 3,
+          tat: [1, 2, 3]
         }
       }
     };
 
-    t.deepEqual(removeRaw(data, path), res);
+    t.deepEqual(updateRaw(data, path, obj), res);
     t.deepEqual(data, res);
     t.end();
   });
 
-  t.test('removeRaw complex node from the array ', function(t){
+  t.test('updateRaw complex node in the array ', function(t){
     var data = {
       foo: {
         bar: [
@@ -91,16 +98,18 @@ test('-= removeRaw tests =-', function(t){
       }
     };
     var path = 'root.foo.bar.2';
+    var obj = { cit: 'nam' };
     var res = {
       foo: {
         bar: [
           { buz: 'qux' },
-          { tat: 'sat' }
+          { tat: 'sat' },
+          { cit: 'nam' }
         ]
       }
     };
 
-    t.deepEqual(removeRaw(data, path), res);
+    t.deepEqual(updateRaw(data, path, obj), res);
     t.deepEqual(data, res);
     t.end();
   });
