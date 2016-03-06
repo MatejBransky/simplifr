@@ -90,6 +90,8 @@ Is it [Normalizr](https://github.com/gaearon/normalizr)? No. Normalizr requires 
 
 Simplifr is schema agnostic and works with arbitrary JSON.
 
+Simplifr also has `reducers` implementation for `simplified data` as well as for `raw data`. Check Api Reference below.
+
 ## Usage with React/Redux
 
 Let's create an `editable` react component with JSON data from example above.
@@ -203,6 +205,7 @@ In the result, 3 input fields will be created. Each of them will change the corr
 
 ## API Reference
 
+Coming soon...
 
 ## Test
 
