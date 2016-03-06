@@ -3,10 +3,15 @@ var test = require('tape'),
   add = require('../').add,
   remove = require('../').remove,
   reset = require('../').reset,
-  update = require('../').update
+  update = require('../').update,
+  addRaw = require('../').addRaw
   ;
 
 test('simplifr tests', function(t){
+
+  /**
+   * Simplified Data
+   * */
 
   // Simplify
   t.test('simplify object ', function(t){
@@ -889,6 +894,105 @@ test('simplifr tests', function(t){
     }
     var data = simplify(json);
     t.deepEqual(update(data, path, obj), res);
+    t.deepEqual(data, res);
+    t.end();
+  });
+
+
+  /**
+   * Raw Data
+   * */
+
+  // Add simple nodes
+  t.test('addRaw simple single node to the object ', function(t){
+    var data = {
+      foo: {
+        bar: {
+          buz: 3
+        }
+      }
+    };
+    var path = 'root.foo.bar';
+    var obj =  { tat: 5 };
+    var res = {
+      foo: {
+        bar: {
+          buz: 3,
+          tat: 5
+        }
+      }
+    };
+
+    t.deepEqual(addRaw(data, path, obj), res);
+    t.deepEqual(data, res);
+    t.end();
+  });
+  t.test('addRaw simple nodes to the object ', function(t){
+    var data = {
+      foo: {
+        bar: {
+          buz: 3
+        }
+      }
+    };
+    var path = 'root.foo.bar';
+    var obj =  { tat: 5, sat: 'om', cit: 'nam' };
+    var res = {
+      foo: {
+        bar: {
+          buz: 3,
+          tat: 5,
+          sat: 'om',
+          cit: 'nam'
+        }
+      }
+    };
+
+    t.deepEqual(addRaw(data, path, obj), res);
+    t.deepEqual(data, res);
+    t.end();
+  });
+  t.test('addRaw simple single node to the array ', function(t){
+    var data = {
+      foo: {
+        bar: [
+          'buz', 'tat'
+        ]
+      }
+    };
+    var path = 'root.foo.bar';
+    var obj =  'sat';
+    var res = {
+      foo: {
+        bar: [
+          'buz', 'tat', 'sat'
+        ]
+      }
+    };
+
+    t.deepEqual(addRaw(data, path, obj), res);
+    t.deepEqual(data, res);
+    t.end();
+  });
+  t.test('addRaw array of simple nodes to the array ', function(t){
+    var data = {
+      foo: {
+        bar: [
+          'buz', 'tat'
+        ]
+      }
+    };
+    var path = 'root.foo.bar';
+    var obj =  ['sat', 'cit'];
+    var res = {
+      foo: {
+        bar: [
+          'buz', 'tat', 'sat', 'cit'
+        ]
+      }
+    };
+
+    t.deepEqual(addRaw(data, path, obj), res);
     t.deepEqual(data, res);
     t.end();
   });

@@ -11,6 +11,10 @@
     }
   }
 
+  /**
+   * Simplified Data Api
+   */
+
   function simplify(json, dilimiter, root, data){
     data = data || {};
     root = root || 'root';
@@ -119,6 +123,42 @@
     return data;
   }
 
+  /**
+   * Raw Data Api
+   */
+
+  function addRaw(data, path, obj, dilimiter){
+    dilimiter = dilimiter || defaults().dilimiter;
+
+    var pathSeq = path.split(dilimiter).slice(1);
+    diveRaw(data, pathSeq, function(_node, _key){
+      var node = _node[_key];
+      if (isArray(node)) {
+        if (!isArray(obj)) obj = [obj];
+        node.push.apply(node, obj);
+      }
+      else if (isObject(obj)) {
+        for (var key in obj) {
+          if (obj.hasOwnProperty(key)) {
+            node[key] = obj[key];
+          }
+        }
+      }
+      return node;
+    });
+
+    return data;
+  }
+
+  function diveRaw(node, pathSeq, action){
+    return (pathSeq.length > 1)
+      ? diveRaw(node[pathSeq.shift()], pathSeq, action)
+      : action(node, pathSeq.shift());
+  }
+
+  /**
+   * Utils
+   */
   function isArray(_) {
     return Object.prototype.toString.call(_) === '[object Array]';
   }
@@ -132,5 +172,6 @@
   exports.update = update;
   exports.remove = remove;
   exports.reset = reset;
+  exports.addRaw = addRaw;
 
 }));
