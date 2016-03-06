@@ -122,8 +122,8 @@ function removeChildNode(data, path, dilimiter){
 
 export function addRaw(data, path, obj, dilimiter){
   dilimiter = dilimiter || defaults().dilimiter;
-
   var pathSeq = path.split(dilimiter).slice(1);
+
   diveRaw(data, pathSeq, function(_node, _key){
     var node = _node[_key];
     if (isArray(node)) {
@@ -138,6 +138,17 @@ export function addRaw(data, path, obj, dilimiter){
       }
     }
     return node;
+  });
+
+  return data;
+}
+
+export function resetRaw(data, path, dilimiter){
+  dilimiter = dilimiter || defaults().dilimiter;
+  var pathSeq = path.split(dilimiter).slice(1);
+
+  diveRaw(data, pathSeq, function(_node, _key){
+    return _node[_key] = null;
   });
 
   return data;

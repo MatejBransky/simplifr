@@ -129,8 +129,8 @@
 
   function addRaw(data, path, obj, dilimiter){
     dilimiter = dilimiter || defaults().dilimiter;
-
     var pathSeq = path.split(dilimiter).slice(1);
+
     diveRaw(data, pathSeq, function(_node, _key){
       var node = _node[_key];
       if (isArray(node)) {
@@ -145,6 +145,17 @@
         }
       }
       return node;
+    });
+
+    return data;
+  }
+
+  function resetRaw(data, path, dilimiter){
+    dilimiter = dilimiter || defaults().dilimiter;
+    var pathSeq = path.split(dilimiter).slice(1);
+
+    diveRaw(data, pathSeq, function(_node, _key){
+      return _node[_key] = null;
     });
 
     return data;
@@ -173,5 +184,6 @@
   exports.remove = remove;
   exports.reset = reset;
   exports.addRaw = addRaw;
+  exports.resetRaw = resetRaw;
 
 }));
