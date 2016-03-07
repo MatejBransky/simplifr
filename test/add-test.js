@@ -1,5 +1,5 @@
 var test = require('tape'),
-  simplify = require('../').simplify
+  simplify = require('../').simplify,
   add = require('../').add
   ;
 

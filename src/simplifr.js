@@ -101,6 +101,29 @@ export function reset(data, path, dilimiter){
   return data;
 }
 
+export function truePath(data, path, dilimiter){
+  dilimiter = dilimiter || defaults().dilimiter;
+  var pathSeq = path.split(dilimiter);
+
+  // the first element is a `root`
+  var subPath = pathSeq.shift();
+  var truePathSeq = [subPath];
+  var idx, node, key;
+
+  while (key = pathSeq.shift()) {
+    node = data[subPath];
+    if (node.type === 'array'){
+      idx = node.childs.indexOf(+key);
+      truePathSeq.push(idx);
+    } else {
+      truePathSeq.push(key);
+    }
+    subPath += dilimiter + key;
+  }
+
+  return truePathSeq.join(dilimiter);
+}
+
 function removeChildNode(data, path, dilimiter){
   dilimiter = dilimiter || defaults().dilimiter;
   var node = data[path];
