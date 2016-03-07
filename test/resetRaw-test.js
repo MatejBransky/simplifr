@@ -1,7 +1,5 @@
 var test = require('tape'),
-  simplify = require('../').simplify,
-  resetRaw = require('../').resetRaw,
-  reset = require('../').reset
+  resetRaw = require('../').resetRaw
   ;
 
 test('-= resetRaw tests =-', function(t){

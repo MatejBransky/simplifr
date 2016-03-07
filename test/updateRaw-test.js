@@ -1,6 +1,4 @@
 var test = require('tape'),
-  simplify = require('../').simplify,
-  update = require('../').update,
   updateRaw = require('../').updateRaw
   ;
 
