@@ -213,6 +213,7 @@ Returns simplified data object.
 * *dilimiter* - path dilimiter, default `'.'`
 * *root* - root path string to find a node in simplified data `data`.
 * *data* - simplified data, if you want to add `json` into `root` node of this data
+
 > currently, I think using `root` and `data` in this manner is not quite convenient...
 
 #### add(data, path, obj, [dilimiter])
