@@ -205,7 +205,49 @@ In the result, 3 input fields will be created. Each of them will change the corr
 
 ## API Reference
 
-Coming soon...
+### Simplified data
+
+#### simplify(json, [dilimiter, root, data])
+Returns simplified data object.
+* *json* - raw json data
+* *dilimiter* - path dilimiter, default `'.'`
+* *root* - root path string to find a node in simplified data `data`.
+* *data* - simplified data, if you want to add `json` into `root` node of this data
+> currently, I think using `root` and `data` in this manner is not quite convenient...
+
+#### add(data, path, obj, [dilimiter])
+Returns simplified data object with updated node
+* *data* - simplified data
+* *path* - a path string to find a node in `data`
+* *obj* - json obj to be simplified and added to `path` node in `data`
+* *dilimiter* - path dilimiter, default `'.'`
+
+#### update(data, path, obj, [dilimiter])
+Returns simplified data object with updated node
+* *data* - simplified data
+* *path* - a path string to find a node in `data`
+* *obj* - json obj to be simplified and updated with `path` node in `data`
+* *dilimiter* - path dilimiter, default `'.'`
+
+#### remove(data, path, [dilimiter])
+Returns simplified data object with removed node
+* *data* - simplified data
+* *path* - a path string that refer to a node to be removed from `data`
+* *dilimiter* - path dilimiter, default `'.'`
+
+#### reset(data, path, [dilimiter])
+Returns simplified data object with updated node
+* *data* - simplified data
+* *path* - a path string that refer to a node to be reset in `data`
+* *dilimiter* - path dilimiter, default `'.'`
+
+#### truePath(data, path, obj, [dilimiter])
+Returns a path string to be used for raw json data
+* *data* - simplified data
+* *path* - a path string that refer to a node in simplified data
+* *dilimiter* - path dilimiter, default `'.'`
+
+### Raw data
 
 ## Test
 
