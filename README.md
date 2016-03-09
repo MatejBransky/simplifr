@@ -205,6 +205,20 @@ In the result, 3 input fields will be created. Each of them will change the corr
 
 ## API Reference
 
+Let's assume that `raw data` is a standard JSON data, eg
+```js
+{
+  foo: 'bar'    
+}
+```
+and `simplified data` is a flat `path-description` data, eg
+```js
+{
+  'root': { type: 'object', childs: ['foo'] },
+  'root.foo': 'bar' 
+}
+```
+
 ### Simplified data
 
 #### simplify(obj, [dilimiter, root])
@@ -246,6 +260,32 @@ Returns a path string to be used for raw json data
 * *dilimiter* - path dilimiter, default `'.'`
 
 ### Raw data
+
+#### addRaw(data, path, obj, [dilimiter])
+Returns raw data object with updated node
+* *data* - raw data
+* *path* - a path string to find a node in `data`
+* *obj* - json obj to be added to `path` node in `data`
+* *dilimiter* - path dilimiter, default `'.'`
+
+#### updateRaw(data, path, obj, [dilimiter])
+Returns raw data object with updated node
+* *data* - raw data
+* *path* - a path string to find a node in `data`
+* *obj* - json obj to be updated with `path` node in `data`
+* *dilimiter* - path dilimiter, default `'.'`
+
+#### removeRaw(data, path, [dilimiter])
+Returns raw data object with removed node
+* *data* - raw data
+* *path* - a path string that refer to a node to be removed from `data`
+* *dilimiter* - path dilimiter, default `'.'`
+
+#### resetRaw(data, path, [dilimiter])
+Returns raw data object with updated node
+* *data* - raw data
+* *path* - a path string that refer to a node to be reset in `data`
+* *dilimiter* - path dilimiter, default `'.'`
 
 ## Test
 
