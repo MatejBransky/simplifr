@@ -16,42 +16,6 @@ export function simplify(obj, dilimiter, root){
   return simplifyNode({}, root, obj, dilimiter);
 }
 
-export function simplifyNode(data, path, obj, dilimiter){
-  dilimiter = dilimiter || defaults().dilimiter;
-
-  dive(obj, path);
-
-  return data;
-
-  function dive(obj, path){
-    data[path] = {
-      type: 'object',
-      childs: []
-    };
-
-    if (isArray(obj)) {
-      data[path].type = 'array';
-      for (var i = -1, l = obj.length; ++i < l;) {
-        data[path].childs.push(i);
-        dive(obj[i], path + dilimiter + i);
-      }
-    }
-
-    else if (isObject(obj)) {
-      for (var key in obj) {
-        if (obj.hasOwnProperty(key)) {
-          data[path].childs.push(key);
-          dive(obj[key], path + dilimiter + key);
-        }
-      }
-    }
-
-    else data[path] = obj;
-
-    return data;
-  }
-}
-
 export function add(data, path, obj, dilimiter){
   dilimiter = dilimiter || defaults().dilimiter;
   var node = data[path];
@@ -128,6 +92,42 @@ export function truePath(data, path, dilimiter){
   }
 
   return truePathSeq.join(dilimiter);
+}
+
+function simplifyNode(data, path, obj, dilimiter){
+  dilimiter = dilimiter || defaults().dilimiter;
+
+  dive(obj, path);
+
+  return data;
+
+  function dive(obj, path){
+    data[path] = {
+      type: 'object',
+      childs: []
+    };
+
+    if (isArray(obj)) {
+      data[path].type = 'array';
+      for (var i = -1, l = obj.length; ++i < l;) {
+        data[path].childs.push(i);
+        dive(obj[i], path + dilimiter + i);
+      }
+    }
+
+    else if (isObject(obj)) {
+      for (var key in obj) {
+        if (obj.hasOwnProperty(key)) {
+          data[path].childs.push(key);
+          dive(obj[key], path + dilimiter + key);
+        }
+      }
+    }
+
+    else data[path] = obj;
+
+    return data;
+  }
 }
 
 function removeChildNode(data, path, dilimiter){

@@ -207,14 +207,11 @@ In the result, 3 input fields will be created. Each of them will change the corr
 
 ### Simplified data
 
-#### simplify(json, [dilimiter, root, data])
+#### simplify(obj, [dilimiter, root])
 Returns simplified data object.
-* *json* - raw json data
+* *obj* - raw json data to be simplified
 * *dilimiter* - path dilimiter, default `'.'`
-* *root* - root path string to find a node in simplified data `data`.
-* *data* - simplified data, if you want to add `json` into `root` node of this data
-
-> currently, I think using `root` and `data` in this manner is not quite convenient...
+* *root* - root path string, default `'root'`.
 
 #### add(data, path, obj, [dilimiter])
 Returns simplified data object with updated node
