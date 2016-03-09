@@ -1,5 +1,6 @@
 function defaults(){
   return {
+    root: 'root',
     dilimiter: '.'
   }
 }
@@ -8,39 +9,44 @@ function defaults(){
  * Simplified Data Api
  */
 
-export function simplify(json, dilimiter, root, data){
-  data = data || {};
-  root = root || 'root';
+export function simplify(obj, dilimiter, root){
+  dilimiter = dilimiter || defaults().dilimiter;
+  root = root || defaults().root;
+
+  return simplifyNode({}, root, obj, dilimiter);
+}
+
+export function simplifyNode(data, path, obj, dilimiter){
   dilimiter = dilimiter || defaults().dilimiter;
 
-  dive(json, root);
+  dive(obj, path);
 
   return data;
 
-  function dive(json, path){
+  function dive(obj, path){
     data[path] = {
       type: 'object',
       childs: []
     };
 
-    if (isArray(json)) {
+    if (isArray(obj)) {
       data[path].type = 'array';
-      for (var i = -1, l = json.length; ++i < l;) {
+      for (var i = -1, l = obj.length; ++i < l;) {
         data[path].childs.push(i);
-        dive(json[i], path + dilimiter + i);
+        dive(obj[i], path + dilimiter + i);
       }
     }
 
-    else if (isObject(json)) {
-      for (var key in json) {
-        if (json.hasOwnProperty(key)) {
+    else if (isObject(obj)) {
+      for (var key in obj) {
+        if (obj.hasOwnProperty(key)) {
           data[path].childs.push(key);
-          dive(json[key], path + dilimiter + key);
+          dive(obj[key], path + dilimiter + key);
         }
       }
     }
 
-    else data[path] = json;
+    else data[path] = obj;
 
     return data;
   }
@@ -55,7 +61,7 @@ export function add(data, path, obj, dilimiter){
     if (!isArray(obj)) obj = [obj];
     obj.forEach(function(d){
       node.childs.push(++max);
-      simplify(d, dilimiter, path + dilimiter + max, data);
+      simplifyNode(data, path + dilimiter + max, d, dilimiter);
     });
   }
 
@@ -63,7 +69,7 @@ export function add(data, path, obj, dilimiter){
     var keys = Object.keys(obj);
     keys.forEach(function(key){
       node.childs.push(key);
-      simplify(obj[key], dilimiter, path + dilimiter + key, data);
+      simplifyNode(data, path + dilimiter + key, obj[key], dilimiter);
     });
   }
 
@@ -72,7 +78,7 @@ export function add(data, path, obj, dilimiter){
 
 export function update(data, path, obj, dilimiter){
   reset(data, path, dilimiter);
-  simplify(obj, dilimiter, path, data);
+  simplifyNode(data, path, obj, dilimiter);
   return data;
 }
 
