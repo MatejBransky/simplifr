@@ -221,39 +221,39 @@ and `simplified data` is a flat `path-description` data, eg
 
 ### Simplified data
 
-#### simplify(obj, [dilimiter, root])
+#### `simplify(obj, [dilimiter, root])`
 Returns simplified data object.
 * *obj* - raw json data to be simplified
 * *dilimiter* - path dilimiter, default `'.'`
 * *root* - root path string, default `'root'`.
 
-#### add(data, path, obj, [dilimiter])
+#### `add(data, path, obj, [dilimiter])`
 Returns simplified data object with updated node
 * *data* - simplified data
 * *path* - a path string to find a node in `data`
 * *obj* - json obj to be simplified and added to `path` node in `data`
 * *dilimiter* - path dilimiter, default `'.'`
 
-#### update(data, path, obj, [dilimiter])
+#### `update(data, path, obj, [dilimiter])`
 Returns simplified data object with updated node
 * *data* - simplified data
 * *path* - a path string to find a node in `data`
 * *obj* - json obj to be simplified and updated with `path` node in `data`
 * *dilimiter* - path dilimiter, default `'.'`
 
-#### remove(data, path, [dilimiter])
+#### `remove(data, path, [dilimiter])`
 Returns simplified data object with removed node
 * *data* - simplified data
 * *path* - a path string that refer to a node to be removed from `data`
 * *dilimiter* - path dilimiter, default `'.'`
 
-#### reset(data, path, [dilimiter])
+#### `reset(data, path, [dilimiter])`
 Returns simplified data object with updated node
 * *data* - simplified data
 * *path* - a path string that refer to a node to be reset in `data`
 * *dilimiter* - path dilimiter, default `'.'`
 
-#### truePath(data, path, obj, [dilimiter])
+#### `truePath(data, path, obj, [dilimiter])`
 Returns a path string to be used for raw json data
 * *data* - simplified data
 * *path* - a path string that refer to a node in simplified data
@@ -261,27 +261,30 @@ Returns a path string to be used for raw json data
 
 ### Raw data
 
-#### addRaw(data, path, obj, [dilimiter])
+> Note that in general `path` for simplified data and `path` for raw data is NOT the same. 
+> So if we know a correct `path` for simplified `data`, the correct path for raw data will be `truePath(data, path, [dilimiter])`.   
+
+#### `addRaw(data, path, obj, [dilimiter])`
 Returns raw data object with updated node
 * *data* - raw data
 * *path* - a path string to find a node in `data`
 * *obj* - json obj to be added to `path` node in `data`
 * *dilimiter* - path dilimiter, default `'.'`
 
-#### updateRaw(data, path, obj, [dilimiter])
+#### `updateRaw(data, path, obj, [dilimiter])`
 Returns raw data object with updated node
 * *data* - raw data
 * *path* - a path string to find a node in `data`
 * *obj* - json obj to be updated with `path` node in `data`
 * *dilimiter* - path dilimiter, default `'.'`
 
-#### removeRaw(data, path, [dilimiter])
+#### `removeRaw(data, path, [dilimiter])`
 Returns raw data object with removed node
 * *data* - raw data
 * *path* - a path string that refer to a node to be removed from `data`
 * *dilimiter* - path dilimiter, default `'.'`
 
-#### resetRaw(data, path, [dilimiter])
+#### `resetRaw(data, path, [dilimiter])`
 Returns raw data object with updated node
 * *data* - raw data
 * *path* - a path string that refer to a node to be reset in `data`
