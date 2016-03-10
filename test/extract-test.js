@@ -1,9 +1,9 @@
 var test = require('tape'),
-  extractRaw = require('../').extractRaw;
+  extract = require('../').extract;
 
-test('-= extractRaw tests =-', function(t){
+test('-= extract tests =-', function(t){
 
-  t.test('extractRaw object ', function(t){
+  t.test('extract object ', function(t){
     var data = {
       'root': {
         type: 'object',
@@ -16,11 +16,11 @@ test('-= extractRaw tests =-', function(t){
       key1: 'val1',
       key2: 'val2',
     };
-    t.deepEqual(extractRaw(data), res);
+    t.deepEqual(extract(data), res);
     t.end();
   });
 
-  t.test('extractRaw object with array ', function(t){
+  t.test('extract object with array ', function(t){
     var data = {
       'root': {
         type: 'object',
@@ -39,11 +39,11 @@ test('-= extractRaw tests =-', function(t){
       key1: 'val1',
       key2: [1,2,3]
     };
-    t.deepEqual(extractRaw(data), res)
+    t.deepEqual(extract(data), res)
     t.end();
   });
 
-  t.test('extractRaw object with dilimiter "_" ', function(t){
+  t.test('extract object with dilimiter "_" ', function(t){
     var data = {
       'root': {
         type: 'object',
@@ -62,11 +62,11 @@ test('-= extractRaw tests =-', function(t){
       key1: 'val1',
       key2: [1,2,3]
     };
-    t.deepEqual(extractRaw(data, '_'), res)
+    t.deepEqual(extract(data, null, '_'), res)
     t.end();
   });
 
-  t.test('extractRaw complex data with nested arrays ', function(t){
+  t.test('extract complex data with nested arrays ', function(t){
     var data = {
       'root': { type: 'object', childs: ['foo']},
       'root.foo': { type: 'object', childs: ['bar']},
@@ -112,14 +112,14 @@ test('-= extractRaw tests =-', function(t){
       }
     };
 
-    t.deepEqual(extractRaw(data), res);
-    t.deepEqual(extractRaw(data, null, 'root.foo.bar.3.buz'), [1, 2, 3]);
+    t.deepEqual(extract(data), res);
+    t.deepEqual(extract(data, 'root.foo.bar.3.buz'), [1, 2, 3]);
 
-    t.deepEqual(extractRaw(data, null, 'root.foo.bar.5.tat.30'), { c: 3 });
-    t.deepEqual(extractRaw(data, null, 'root.foo.bar.5.tat.30.c'), 3);
+    t.deepEqual(extract(data, 'root.foo.bar.5.tat.30'), { c: 3 });
+    t.deepEqual(extract(data, 'root.foo.bar.5.tat.30.c'), 3);
 
-    t.deepEqual(extractRaw(data, null, 'root.foo.bar.12.sat.20'), [4, 5, 6]);
-    t.deepEqual(extractRaw(data, null, 'root.foo.bar.12.sat.20.10'), 5);
+    t.deepEqual(extract(data, 'root.foo.bar.12.sat.20'), [4, 5, 6]);
+    t.deepEqual(extract(data, 'root.foo.bar.12.sat.20.10'), 5);
 
     t.end();
   });

@@ -71,6 +71,36 @@ export function reset(data, path, dilimiter){
   return data;
 }
 
+export function extract(data, path, dilimiter){
+  dilimiter = dilimiter || defaults().dilimiter;
+  path = path || defaults().root;
+
+  return dive(path);
+
+  function dive(path){
+    var obj;
+    var node = data[path];
+
+    if (node.type === 'array') {
+      obj = [];
+      node.childs.forEach(function(key){
+        obj.push(dive(path + dilimiter + key));
+      });
+    }
+
+    else if (node.type === 'object') {
+      obj = {};
+      node.childs.forEach(function(key){
+        obj[key] = dive(path + dilimiter + key);
+      });
+    }
+
+    else obj = node;
+
+    return obj;
+  }
+}
+
 export function truePath(data, path, dilimiter){
   dilimiter = dilimiter || defaults().dilimiter;
   var pathSeq = path.split(dilimiter);
@@ -148,36 +178,6 @@ function removeChildNode(data, path, dilimiter){
 /**
  * Raw Data Api
  */
-
-export function extractRaw(data, dilimiter, root){
-  dilimiter = dilimiter || defaults().dilimiter;
-  root = root || defaults().root;
-
-  return dive(root);
-
-  function dive(path){
-    var obj;
-    var node = data[path];
-
-    if (node.type === 'array') {
-      obj = [];
-      node.childs.forEach(function(key){
-        obj.push(dive(path + dilimiter + key));
-      });
-    }
-
-    else if (node.type === 'object') {
-      obj = {};
-      node.childs.forEach(function(key){
-        obj[key] = dive(path + dilimiter + key);
-      });
-    }
-
-    else obj = node;
-
-    return obj;
-  }
-}
 
 export function addRaw(data, path, obj, dilimiter){
   dilimiter = dilimiter || defaults().dilimiter;
