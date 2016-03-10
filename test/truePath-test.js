@@ -156,8 +156,7 @@ test('-= truePath tests =-', function(t){
       'root.foo.bar.12.sat.30': { type: 'array', childs: [0, 10, 20]},
       'root.foo.bar.12.sat.30.0': 7,
       'root.foo.bar.12.sat.30.10': 8,
-      'root.foo.bar.12.sat.30.20': 8,
-
+      'root.foo.bar.12.sat.30.20': 9
     };
 
     t.equal(truePath(data, 'root.foo.bar.3'), 'root.foo.bar.0');

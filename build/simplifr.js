@@ -156,6 +156,36 @@
    * Raw Data Api
    */
 
+  function extractRaw(data, dilimiter, root){
+    dilimiter = dilimiter || defaults().dilimiter;
+    root = root || defaults().root;
+
+    return dive(root);
+
+    function dive(path){
+      var obj;
+      var node = data[path];
+
+      if (node.type === 'array') {
+        obj = [];
+        node.childs.forEach(function(key){
+          obj.push(dive(path + dilimiter + key));
+        });
+      }
+
+      else if (node.type === 'object') {
+        obj = {};
+        node.childs.forEach(function(key){
+          obj[key] = dive(path + dilimiter + key);
+        });
+      }
+
+      else obj = node;
+
+      return obj;
+    }
+  }
+
   function addRaw(data, path, obj, dilimiter){
     dilimiter = dilimiter || defaults().dilimiter;
     var pathSeq = path.split(dilimiter).slice(1);
@@ -235,6 +265,7 @@
   exports.remove = remove;
   exports.reset = reset;
   exports.truePath = truePath;
+  exports.extractRaw = extractRaw;
   exports.addRaw = addRaw;
   exports.resetRaw = resetRaw;
   exports.removeRaw = removeRaw;
