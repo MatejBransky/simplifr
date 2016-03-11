@@ -1,4 +1,4 @@
-# simplifr [![NPM Version](http://img.shields.io/npm/v/simplifr.svg?style=flat)](https://www.npmjs.org/package/simplifr)
+# simplifr [![Build Status](https://travis-ci.org/krispo/simplifr.svg?branch=master)](https://travis-ci.org/krispo/simplifr) [![NPM Version](http://img.shields.io/npm/v/simplifr.svg?style=flat)](https://www.npmjs.org/package/simplifr)
 Simplifies arbitrary JSON data into a flat single-level (path -> description) structure.
 It's designed for React/Redux/Flux apps. Inspired by [Normalizr](https://github.com/gaearon/normalizr).
 
