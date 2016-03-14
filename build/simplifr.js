@@ -1,4 +1,4 @@
-/* Simplifr, v0.0.9 */
+/* Simplifr, v0.1.0 */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
   typeof define === 'function' && define.amd ? define(['exports'], factory) :

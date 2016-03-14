@@ -270,6 +270,12 @@ Returns a path string to be used for raw json data
 > Note that in general `path` for simplified data and `path` for raw data is NOT the same. 
 > So if we know a correct `path` for simplified `data`, the correct path for raw data will be `truePath(data, path, [dilimiter])`.   
 
+#### `getRaw(data, path, [dilimiter])`
+Returns a sub node of the raw data that corresponds to path string.
+* *data* - raw data
+* *path* - a path string to find a node in `data`
+* *dilimiter* - path dilimiter, default `'.'`
+
 #### `addRaw(data, path, obj, [dilimiter])`
 Returns raw data object with updated node
 * *data* - raw data
