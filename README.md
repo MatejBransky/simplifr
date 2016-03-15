@@ -253,10 +253,10 @@ Returns simplified data object with updated node
 * *path* - a path string that refer to a node to be reset in `data`
 * *dilimiter* - path dilimiter, default `'.'`
 
-#### `extract(data, [path, dilimiter])`
+#### `desimplify(data, [path, dilimiter])`
 Returns raw json data object.
 * *data* - simplified data
-* *path* - a path string that refer to a node to be extracted into raw data, default `'root'`.
+* *path* - a path string that refer to a node to be desimplified into raw data, default `'root'`.
 * *dilimiter* - path dilimiter, default `'.'`
 
 #### `truePath(data, path, [dilimiter])`

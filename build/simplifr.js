@@ -78,7 +78,7 @@
     return data;
   }
 
-  function extract(data, path, dilimiter){
+  function desimplify(data, path, dilimiter){
     dilimiter = dilimiter || defaults().dilimiter;
     path = path || defaults().root;
 
@@ -273,7 +273,7 @@
   exports.update = update;
   exports.remove = remove;
   exports.reset = reset;
-  exports.extract = extract;
+  exports.desimplify = desimplify;
   exports.truePath = truePath;
   exports.getRaw = getRaw;
   exports.addRaw = addRaw;

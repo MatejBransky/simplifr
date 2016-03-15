@@ -71,7 +71,7 @@ export function reset(data, path, dilimiter){
   return data;
 }
 
-export function extract(data, path, dilimiter){
+export function desimplify(data, path, dilimiter){
   dilimiter = dilimiter || defaults().dilimiter;
   path = path || defaults().root;
 

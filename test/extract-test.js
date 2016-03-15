@@ -1,9 +1,9 @@
 var test = require('tape'),
-  extract = require('../').extract;
+  desimplify = require('../').desimplify;
 
-test('-= extract tests =-', function(t){
+test('-= desimplify tests =-', function(t){
 
-  t.test('extract object ', function(t){
+  t.test('desimplify object ', function(t){
     var data = {
       'root': {
         type: 'object',
@@ -16,11 +16,11 @@ test('-= extract tests =-', function(t){
       key1: 'val1',
       key2: 'val2',
     };
-    t.deepEqual(extract(data), res);
+    t.deepEqual(desimplify(data), res);
     t.end();
   });
 
-  t.test('extract object with array ', function(t){
+  t.test('desimplify object with array ', function(t){
     var data = {
       'root': {
         type: 'object',
@@ -39,11 +39,11 @@ test('-= extract tests =-', function(t){
       key1: 'val1',
       key2: [1,2,3]
     };
-    t.deepEqual(extract(data), res)
+    t.deepEqual(desimplify(data), res)
     t.end();
   });
 
-  t.test('extract object with dilimiter "_" ', function(t){
+  t.test('desimplify object with dilimiter "_" ', function(t){
     var data = {
       'root': {
         type: 'object',
@@ -62,11 +62,11 @@ test('-= extract tests =-', function(t){
       key1: 'val1',
       key2: [1,2,3]
     };
-    t.deepEqual(extract(data, null, '_'), res)
+    t.deepEqual(desimplify(data, null, '_'), res)
     t.end();
   });
 
-  t.test('extract complex data with nested arrays ', function(t){
+  t.test('desimplify complex data with nested arrays ', function(t){
     var data = {
       'root': { type: 'object', childs: ['foo']},
       'root.foo': { type: 'object', childs: ['bar']},
@@ -112,14 +112,14 @@ test('-= extract tests =-', function(t){
       }
     };
 
-    t.deepEqual(extract(data), res);
-    t.deepEqual(extract(data, 'root.foo.bar.3.buz'), [1, 2, 3]);
+    t.deepEqual(desimplify(data), res);
+    t.deepEqual(desimplify(data, 'root.foo.bar.3.buz'), [1, 2, 3]);
 
-    t.deepEqual(extract(data, 'root.foo.bar.5.tat.30'), { c: 3 });
-    t.deepEqual(extract(data, 'root.foo.bar.5.tat.30.c'), 3);
+    t.deepEqual(desimplify(data, 'root.foo.bar.5.tat.30'), { c: 3 });
+    t.deepEqual(desimplify(data, 'root.foo.bar.5.tat.30.c'), 3);
 
-    t.deepEqual(extract(data, 'root.foo.bar.12.sat.20'), [4, 5, 6]);
-    t.deepEqual(extract(data, 'root.foo.bar.12.sat.20.10'), 5);
+    t.deepEqual(desimplify(data, 'root.foo.bar.12.sat.20'), [4, 5, 6]);
+    t.deepEqual(desimplify(data, 'root.foo.bar.12.sat.20.10'), 5);
 
     t.end();
   });
