@@ -280,14 +280,14 @@ Returns a sub node of the raw data that corresponds to path string.
 Returns raw data object with updated node
 * *data* - raw data
 * *path* - a path string to find a node in `data`
-* *obj* - json obj to be added to `path` node in `data`
+* *obj* - json obj to be added to `path` node in `data`. *obj* can also be used as a function of the previous value: `addRaw(data, path, function(prev){ return prev + 1; })`
 * *dilimiter* - path dilimiter, default `'.'`
 
 #### `updateRaw(data, path, obj, [dilimiter])`
 Returns raw data object with updated node
 * *data* - raw data
 * *path* - a path string to find a node in `data`
-* *obj* - json obj to be updated with `path` node in `data`
+* *obj* - json obj to be updated with `path` node in `data`. *obj* can also be used as a function of the previous value: `updateRaw(data, path, function(prev){ return prev + 1; })`
 * *dilimiter* - path dilimiter, default `'.'`
 
 #### `removeRaw(data, path, [dilimiter])`

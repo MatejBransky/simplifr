@@ -194,6 +194,8 @@ export function addRaw(data, path, obj, dilimiter){
 
   diveRaw(data, pathSeq, function(_node, _key){
     var node = _node[_key];
+    if (isFunction(obj)) obj = obj(node);
+
     if (isArray(node)) {
       if (!isArray(obj)) obj = [obj];
       node.push.apply(node, obj);
@@ -238,7 +240,7 @@ export function updateRaw(data, path, obj, dilimiter){
   var pathSeq = path.split(dilimiter).slice(1);
 
   diveRaw(data, pathSeq, function(node, key){
-    return node[key] = obj;
+    return isFunction(obj) ? node[key] = obj(node[key]) : node[key] = obj;
   });
 
   return data;
@@ -259,4 +261,8 @@ function isArray(_) {
 
 function isObject(_) {
   return Object.prototype.toString.call(_) === '[object Object]';
+}
+
+function isFunction(_) {
+  return Object.prototype.toString.call(_) === '[object Function]';
 }
