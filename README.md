@@ -219,6 +219,17 @@ and `simplified data` is a flat `path-description` data, eg
 }
 ```
 
+`Path` string is a string of the following form
+
+```js
+'root.path.to.json.node'
+```
+ or equivalent form with omitting `root`
+ 
+ ```js
+ 'path.to.json.node'
+ ```
+
 ### Simplified data
 
 #### `simplify(obj, [dilimiter, root])`

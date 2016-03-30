@@ -181,7 +181,8 @@ function removeChildNode(data, path, dilimiter){
 
 export function getRaw(data, path, dilimiter){
   dilimiter = dilimiter || defaults().dilimiter;
-  var pathSeq = path.split(dilimiter).slice(1);
+  var pathSeq = path.split(dilimiter)
+  if (pathSeq[0] === defaults().root) pathSeq.shift();
 
   return diveRaw(data, pathSeq, function(node, key){
     return key ? node[key] : node;
@@ -190,7 +191,8 @@ export function getRaw(data, path, dilimiter){
 
 export function addRaw(data, path, obj, dilimiter){
   dilimiter = dilimiter || defaults().dilimiter;
-  var pathSeq = path.split(dilimiter).slice(1);
+  var pathSeq = path.split(dilimiter);
+  if (pathSeq[0] === defaults().root) pathSeq.shift();
 
   diveRaw(data, pathSeq, function(_node, _key){
     var node = _node[_key];
@@ -215,7 +217,8 @@ export function addRaw(data, path, obj, dilimiter){
 
 export function resetRaw(data, path, dilimiter){
   dilimiter = dilimiter || defaults().dilimiter;
-  var pathSeq = path.split(dilimiter).slice(1);
+  var pathSeq = path.split(dilimiter);
+  if (pathSeq[0] === defaults().root) pathSeq.shift();
 
   diveRaw(data, pathSeq, function(node, key){
     return node[key] = null;
@@ -226,7 +229,8 @@ export function resetRaw(data, path, dilimiter){
 
 export function removeRaw(data, path, dilimiter){
   dilimiter = dilimiter || defaults().dilimiter;
-  var pathSeq = path.split(dilimiter).slice(1);
+  var pathSeq = path.split(dilimiter);
+  if (pathSeq[0] === defaults().root) pathSeq.shift();
 
   diveRaw(data, pathSeq, function(node, key){
     return isArray(node) ? (node.splice(+key, 1), node) : delete node[key];
@@ -237,7 +241,8 @@ export function removeRaw(data, path, dilimiter){
 
 export function updateRaw(data, path, obj, dilimiter){
   dilimiter = dilimiter || defaults().dilimiter;
-  var pathSeq = path.split(dilimiter).slice(1);
+  var pathSeq = path.split(dilimiter);
+  if (pathSeq[0] === defaults().root) pathSeq.shift();
 
   diveRaw(data, pathSeq, function(node, key){
     return isFunction(obj) ? node[key] = obj(node[key]) : node[key] = obj;

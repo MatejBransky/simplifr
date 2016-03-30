@@ -1,4 +1,4 @@
-/* Simplifr, v0.1.2 */
+/* Simplifr, v0.1.3 */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
   typeof define === 'function' && define.amd ? define(['exports'], factory) :
@@ -188,7 +188,8 @@
 
   function getRaw(data, path, dilimiter){
     dilimiter = dilimiter || defaults().dilimiter;
-    var pathSeq = path.split(dilimiter).slice(1);
+    var pathSeq = path.split(dilimiter)
+    if (pathSeq[0] === defaults().root) pathSeq.shift();
 
     return diveRaw(data, pathSeq, function(node, key){
       return key ? node[key] : node;
@@ -197,7 +198,8 @@
 
   function addRaw(data, path, obj, dilimiter){
     dilimiter = dilimiter || defaults().dilimiter;
-    var pathSeq = path.split(dilimiter).slice(1);
+    var pathSeq = path.split(dilimiter);
+    if (pathSeq[0] === defaults().root) pathSeq.shift();
 
     diveRaw(data, pathSeq, function(_node, _key){
       var node = _node[_key];
@@ -222,7 +224,8 @@
 
   function resetRaw(data, path, dilimiter){
     dilimiter = dilimiter || defaults().dilimiter;
-    var pathSeq = path.split(dilimiter).slice(1);
+    var pathSeq = path.split(dilimiter);
+    if (pathSeq[0] === defaults().root) pathSeq.shift();
 
     diveRaw(data, pathSeq, function(node, key){
       return node[key] = null;
@@ -233,7 +236,8 @@
 
   function removeRaw(data, path, dilimiter){
     dilimiter = dilimiter || defaults().dilimiter;
-    var pathSeq = path.split(dilimiter).slice(1);
+    var pathSeq = path.split(dilimiter);
+    if (pathSeq[0] === defaults().root) pathSeq.shift();
 
     diveRaw(data, pathSeq, function(node, key){
       return isArray(node) ? (node.splice(+key, 1), node) : delete node[key];
@@ -244,7 +248,8 @@
 
   function updateRaw(data, path, obj, dilimiter){
     dilimiter = dilimiter || defaults().dilimiter;
-    var pathSeq = path.split(dilimiter).slice(1);
+    var pathSeq = path.split(dilimiter);
+    if (pathSeq[0] === defaults().root) pathSeq.shift();
 
     diveRaw(data, pathSeq, function(node, key){
       return isFunction(obj) ? node[key] = obj(node[key]) : node[key] = obj;
