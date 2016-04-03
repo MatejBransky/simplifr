@@ -1,4 +1,4 @@
-/* Simplifr, v0.1.3 */
+/* Simplifr, v0.2.0 */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
   typeof define === 'function' && define.amd ? define(['exports'], factory) :
@@ -108,29 +108,6 @@
     }
   }
 
-  function truePath(data, path, dilimiter){
-    dilimiter = dilimiter || defaults().dilimiter;
-    var pathSeq = path.split(dilimiter);
-
-    // the first element is a `root`
-    var subPath = pathSeq.shift();
-    var truePathSeq = [subPath];
-    var idx, node, key;
-
-    while (key = pathSeq.shift()) {
-      node = data[subPath];
-      if (node.type === 'array'){
-        idx = node.childs.indexOf(+key);
-        truePathSeq.push(idx);
-      } else {
-        truePathSeq.push(key);
-      }
-      subPath += dilimiter + key;
-    }
-
-    return truePathSeq.join(dilimiter);
-  }
-
   function simplifyNode(data, path, obj, dilimiter){
     dilimiter = dilimiter || defaults().dilimiter;
 
@@ -183,88 +160,6 @@
   }
 
   /**
-   * Raw Data Api
-   */
-
-  function getRaw(data, path, dilimiter){
-    dilimiter = dilimiter || defaults().dilimiter;
-    var pathSeq = path.split(dilimiter)
-    if (pathSeq[0] === defaults().root) pathSeq.shift();
-
-    return diveRaw(data, pathSeq, function(node, key){
-      return key ? node[key] : node;
-    });
-  }
-
-  function addRaw(data, path, obj, dilimiter){
-    dilimiter = dilimiter || defaults().dilimiter;
-    var pathSeq = path.split(dilimiter);
-    if (pathSeq[0] === defaults().root) pathSeq.shift();
-
-    diveRaw(data, pathSeq, function(_node, _key){
-      var node = _node[_key];
-      if (isFunction(obj)) obj = obj(node);
-
-      if (isArray(node)) {
-        if (!isArray(obj)) obj = [obj];
-        node.push.apply(node, obj);
-      }
-      else if (isObject(obj)) {
-        for (var key in obj) {
-          if (obj.hasOwnProperty(key)) {
-            node[key] = obj[key];
-          }
-        }
-      }
-      return node;
-    });
-
-    return data;
-  }
-
-  function resetRaw(data, path, dilimiter){
-    dilimiter = dilimiter || defaults().dilimiter;
-    var pathSeq = path.split(dilimiter);
-    if (pathSeq[0] === defaults().root) pathSeq.shift();
-
-    diveRaw(data, pathSeq, function(node, key){
-      return node[key] = null;
-    });
-
-    return data;
-  }
-
-  function removeRaw(data, path, dilimiter){
-    dilimiter = dilimiter || defaults().dilimiter;
-    var pathSeq = path.split(dilimiter);
-    if (pathSeq[0] === defaults().root) pathSeq.shift();
-
-    diveRaw(data, pathSeq, function(node, key){
-      return isArray(node) ? (node.splice(+key, 1), node) : delete node[key];
-    });
-
-    return data;
-  }
-
-  function updateRaw(data, path, obj, dilimiter){
-    dilimiter = dilimiter || defaults().dilimiter;
-    var pathSeq = path.split(dilimiter);
-    if (pathSeq[0] === defaults().root) pathSeq.shift();
-
-    diveRaw(data, pathSeq, function(node, key){
-      return isFunction(obj) ? node[key] = obj(node[key]) : node[key] = obj;
-    });
-
-    return data;
-  }
-
-  function diveRaw(node, pathSeq, action){
-    return (pathSeq.length > 1)
-      ? diveRaw(node[pathSeq.shift()], pathSeq, action)
-      : action(node, pathSeq.shift());
-  }
-
-  /**
    * Utils
    */
   function isArray(_) {
@@ -275,21 +170,11 @@
     return Object.prototype.toString.call(_) === '[object Object]';
   }
 
-  function isFunction(_) {
-    return Object.prototype.toString.call(_) === '[object Function]';
-  }
-
   exports.simplify = simplify;
   exports.add = add;
   exports.update = update;
   exports.remove = remove;
   exports.reset = reset;
   exports.desimplify = desimplify;
-  exports.truePath = truePath;
-  exports.getRaw = getRaw;
-  exports.addRaw = addRaw;
-  exports.resetRaw = resetRaw;
-  exports.removeRaw = removeRaw;
-  exports.updateRaw = updateRaw;
 
 }));
