@@ -270,49 +270,6 @@ Returns raw json data object.
 * *path* - a path string that refer to a node to be desimplified into raw data, default `'root'`.
 * *dilimiter* - path dilimiter, default `'.'`
 
-#### `truePath(data, path, [dilimiter])`
-Returns a path string to be used for raw json data
-* *data* - simplified data
-* *path* - a path string that refer to a node in simplified data
-* *dilimiter* - path dilimiter, default `'.'`
-
-### Raw data
-
-> Note that in general `path` for simplified data and `path` for raw data is NOT the same. 
-> So if we know a correct `path` for simplified `data`, the correct path for raw data will be `truePath(data, path, [dilimiter])`.   
-
-#### `getRaw(data, path, [dilimiter])`
-Returns a sub node of the raw data that corresponds to path string.
-* *data* - raw data
-* *path* - a path string to find a node in `data`
-* *dilimiter* - path dilimiter, default `'.'`
-
-#### `addRaw(data, path, obj, [dilimiter])`
-Returns raw data object with updated node
-* *data* - raw data
-* *path* - a path string to find a node in `data`
-* *obj* - json obj to be added to `path` node in `data`. *obj* can also be used as a function of the previous value: `addRaw(data, path, function(prev){ return prev + 1; })`
-* *dilimiter* - path dilimiter, default `'.'`
-
-#### `updateRaw(data, path, obj, [dilimiter])`
-Returns raw data object with updated node
-* *data* - raw data
-* *path* - a path string to find a node in `data`
-* *obj* - json obj to be updated with `path` node in `data`. *obj* can also be used as a function of the previous value: `updateRaw(data, path, function(prev){ return prev + 1; })`
-* *dilimiter* - path dilimiter, default `'.'`
-
-#### `removeRaw(data, path, [dilimiter])`
-Returns raw data object with removed node
-* *data* - raw data
-* *path* - a path string that refer to a node to be removed from `data`
-* *dilimiter* - path dilimiter, default `'.'`
-
-#### `resetRaw(data, path, [dilimiter])`
-Returns raw data object with updated node
-* *data* - raw data
-* *path* - a path string that refer to a node to be reset in `data`
-* *dilimiter* - path dilimiter, default `'.'`
-
 ## Test
 
     npm test
