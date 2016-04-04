@@ -12,10 +12,6 @@
     }
   }
 
-  /**
-   * Simplified Data Api
-   */
-
   function simplify(obj, dilimiter, root){
     dilimiter = dilimiter || defaults().dilimiter;
     root = root || defaults().root;
@@ -26,6 +22,9 @@
   function add(data, path, obj, dilimiter){
     dilimiter = dilimiter || defaults().dilimiter;
     var node = data[path];
+
+    if (typeof node === 'undefined' || typeof node === 'null')
+      return data;
 
     if (node.type === 'array') {
       var max = Math.max.apply(null, node.childs);
@@ -88,6 +87,9 @@
       var obj;
       var node = data[path];
 
+      if (typeof node === 'undefined' || typeof node === 'null')
+        return node;
+
       if (node.type === 'array') {
         obj = [];
         node.childs.forEach(function(key){
@@ -148,6 +150,9 @@
     dilimiter = dilimiter || defaults().dilimiter;
     var node = data[path];
 
+    if (typeof node === 'undefined' || typeof node === 'null')
+      return data;
+
     if (node.type === 'array' || node.type === 'object') {
       node.childs.forEach(function(key){
         removeChildNode(data, path + dilimiter + key);
@@ -159,9 +164,6 @@
     return data;
   }
 
-  /**
-   * Utils
-   */
   function isArray(_) {
     return Object.prototype.toString.call(_) === '[object Array]';
   }

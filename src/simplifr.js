@@ -5,10 +5,6 @@ function defaults(){
   }
 }
 
-/**
- * Simplified Data Api
- */
-
 export function simplify(obj, dilimiter, root){
   dilimiter = dilimiter || defaults().dilimiter;
   root = root || defaults().root;
@@ -19,6 +15,9 @@ export function simplify(obj, dilimiter, root){
 export function add(data, path, obj, dilimiter){
   dilimiter = dilimiter || defaults().dilimiter;
   var node = data[path];
+
+  if (typeof node === 'undefined' || typeof node === 'null')
+    return data;
 
   if (node.type === 'array') {
     var max = Math.max.apply(null, node.childs);
@@ -81,6 +80,9 @@ export function desimplify(data, path, dilimiter){
     var obj;
     var node = data[path];
 
+    if (typeof node === 'undefined' || typeof node === 'null')
+      return node;
+
     if (node.type === 'array') {
       obj = [];
       node.childs.forEach(function(key){
@@ -141,6 +143,9 @@ function removeChildNode(data, path, dilimiter){
   dilimiter = dilimiter || defaults().dilimiter;
   var node = data[path];
 
+  if (typeof node === 'undefined' || typeof node === 'null')
+    return data;
+
   if (node.type === 'array' || node.type === 'object') {
     node.childs.forEach(function(key){
       removeChildNode(data, path + dilimiter + key);
@@ -152,9 +157,6 @@ function removeChildNode(data, path, dilimiter){
   return data;
 }
 
-/**
- * Utils
- */
 function isArray(_) {
   return Object.prototype.toString.call(_) === '[object Array]';
 }
