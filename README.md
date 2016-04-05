@@ -238,12 +238,52 @@ Returns simplified data object.
 * *dilimiter* - path dilimiter, default `'.'`
 * *root* - root path string, default `'root'`.
 
+Example
+```js
+let obj = {
+  foo: {
+    bar: 'buz'
+  }
+}
+
+let data = simplify(obj)
+/* 
+data = {
+  'root': { type: 'object', childs: ['foo'] },
+  'root.foo': { type: 'object', childs: ['bar'] },
+  'root.foo.bar': 'buz'
+}
+*/
+```
+
 #### `add(data, path, obj, [dilimiter])`
 Returns simplified data object with updated node
 * *data* - simplified data
 * *path* - a path string to find a node in `data`
 * *obj* - json obj to be simplified and added to `path` node in `data`
 * *dilimiter* - path dilimiter, default `'.'`
+
+Example
+```js
+let data = {
+  'root': { type: 'object', childs: ['foo'] },
+  'root.foo': { type: 'object', childs: ['bar'] },
+  'root.foo.bar': 'buz'
+}
+
+add(data, 'root.foo', { array: [1, 2, 3] })
+/* 
+data = {
+  'root': { type: 'object', childs: ['foo'] },
+  'root.foo': { type: 'object', childs: ['bar', 'array'] },
+  'root.foo.bar': 'buz',
+  'root.foo.array': { type: 'array', childs: [0, 1, 2] },
+  'root.foo.array.0': 1,
+  'root.foo.array.1': 2,
+  'root.foo.array.2': 3  
+}
+*/
+```
 
 #### `update(data, path, obj, [dilimiter])`
 Returns simplified data object with updated node
@@ -252,11 +292,54 @@ Returns simplified data object with updated node
 * *obj* - json obj to be simplified and updated with `path` node in `data`
 * *dilimiter* - path dilimiter, default `'.'`
 
+Example
+```js
+let data = {
+  'root': { type: 'object', childs: ['foo'] },
+  'root.foo': { type: 'object', childs: ['bar'] },
+  'root.foo.bar': 'buz'
+}
+
+update(data, 'root.foo', { array: [1, 2, 3] })
+/* 
+data = {
+  'root': { type: 'object', childs: ['foo'] },
+  'root.foo': { type: 'object', childs: ['array'] },  
+  'root.foo.array': { type: 'array', childs: [0, 1, 2] },
+  'root.foo.array.0': 1,
+  'root.foo.array.1': 2,
+  'root.foo.array.2': 3  
+}
+*/
+```
+
 #### `remove(data, path, [dilimiter])`
 Returns simplified data object with removed node
 * *data* - simplified data
 * *path* - a path string that refer to a node to be removed from `data`
 * *dilimiter* - path dilimiter, default `'.'`
+
+Example
+```js
+let data = {
+  'root': { type: 'object', childs: ['foo'] },
+  'root.foo': { type: 'object', childs: ['bar', 'array'] },
+  'root.foo.bar': 'buz',
+  'root.foo.array': { type: 'array', childs: [0, 1, 2] },
+  'root.foo.array.0': 1,
+  'root.foo.array.1': 2,
+  'root.foo.array.2': 3  
+}
+
+remove(data, 'root.foo.array')
+/* 
+data = {
+  'root': { type: 'object', childs: ['foo'] },
+  'root.foo': { type: 'object', childs: ['bar'] },
+  'root.foo.bar': 'buz'
+}
+*/
+```
 
 #### `reset(data, path, [dilimiter])`
 Returns simplified data object with updated node
@@ -264,11 +347,62 @@ Returns simplified data object with updated node
 * *path* - a path string that refer to a node to be reset in `data`
 * *dilimiter* - path dilimiter, default `'.'`
 
+Example
+```js
+let data = {
+  'root': { type: 'object', childs: ['foo'] },
+  'root.foo': { type: 'object', childs: ['bar', 'array'] },
+  'root.foo.bar': 'buz',
+  'root.foo.array': { type: 'array', childs: [0, 1, 2] },
+  'root.foo.array.0': 1,
+  'root.foo.array.1': 2,
+  'root.foo.array.2': 3  
+}
+
+reset(data, 'root.foo.array')
+/* 
+data = {
+  'root': { type: 'object', childs: ['foo'] },
+  'root.foo': { type: 'object', childs: ['bar', 'array'] },
+  'root.foo.bar': 'buz',
+  'root.foo.array': { type: 'array', childs: [] }
+}
+*/
+```
+
 #### `desimplify(data, [path, dilimiter])`
 Returns raw json data object.
 * *data* - simplified data
 * *path* - a path string that refer to a node to be desimplified into raw data, default `'root'`.
 * *dilimiter* - path dilimiter, default `'.'`
+
+Example
+```js
+let data = {
+  'root': { type: 'object', childs: ['foo'] },
+  'root.foo': { type: 'object', childs: ['bar', 'array'] },
+  'root.foo.bar': 'buz',
+  'root.foo.array': { type: 'array', childs: [0, 1, 2] },
+  'root.foo.array.0': 1,
+  'root.foo.array.1': 2,
+  'root.foo.array.2': 3  
+}
+
+let json1 = desimplify(data)
+/* 
+json1 = {
+  foo: {
+    bar: 'buz',
+    array: [1, 2, 3]
+  }
+}
+*/
+
+let json2 = desimplify(data, 'root.foo.array')
+/* 
+json2 = [1, 2, 3]
+*/
+```
 
 ## Test
 
