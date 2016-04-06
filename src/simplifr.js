@@ -103,6 +103,12 @@ export function desimplify(data, path, dilimiter){
   }
 }
 
+export function join(){
+  if (!arguments.length) return;
+  var fargs = Array.prototype.filter.call(arguments, function(v){ return v != undefined && v != '' });
+  return Array.prototype.join.call(fargs, '.');
+}
+
 function simplifyNode(data, path, obj, dilimiter){
   dilimiter = dilimiter || defaults().dilimiter;
 
@@ -164,3 +170,4 @@ function isArray(_) {
 function isObject(_) {
   return Object.prototype.toString.call(_) === '[object Object]';
 }
+

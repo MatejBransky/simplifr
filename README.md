@@ -404,6 +404,16 @@ json2 = [1, 2, 3]
 */
 ```
 
+#### `join(args)`
+Returns `path` string with default `'.'` dilimiter.
+* *args* - sequence of paths to be joined
+
+Example
+```js
+const path = join('root', 'path.to', 'component', '', 'data')
+// path = 'root.path.to.component.data'
+```
+
 ## Test
 
     npm test

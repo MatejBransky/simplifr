@@ -110,6 +110,12 @@
     }
   }
 
+  function join(){
+    if (!arguments.length) return;
+    var fargs = Array.prototype.filter.call(arguments, function(v){ return v != undefined && v != '' });
+    return Array.prototype.join.call(fargs, '.');
+  }
+
   function simplifyNode(data, path, obj, dilimiter){
     dilimiter = dilimiter || defaults().dilimiter;
 
@@ -178,5 +184,6 @@
   exports.remove = remove;
   exports.reset = reset;
   exports.desimplify = desimplify;
+  exports.join = join;
 
 }));
