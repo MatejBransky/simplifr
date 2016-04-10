@@ -10,6 +10,30 @@ It's designed for React/Redux/Flux apps. Inspired by [Normalizr](https://github.
    
 [redux-json-tree](https://github.com/krispo/redux-json-tree) - React/Redux app.   
 
+## Motivation
+
+We can transform the whole Redux store, that can incude complex nested json objects, into a simple flat structure using Simplifr. 
+So that we can get access to an arbitrary data value in the state by `path` identifier `'root.path.to.component.data'`  
+```js
+const value = state['root.path.to.component.data']
+```
+With the same simplicity we can change this value and create corresponding new state in reducers
+```js
+// return new state
+return Object.assign({}, state, { [action.path]: action.value })
+```
+
+In the case of standard JSON (without transformation), something similar can be written with `react-addons-update` addon
+```js
+// return new state
+return update(state, { 
+  path: { to: { component: { data: { $set: action.value }}}}
+})
+```
+check [update](http://facebook.github.io/react/docs/update.html) for more details.
+
+This idea can be easily extended for multiple reducers with different paths, check [redux-simplifr](https://github.com/krispo/redux-simplifr) for more details.
+
 ## How it works
 
 Suppose we have an arbitrary (complex, nested) JSON object
@@ -89,8 +113,6 @@ will be simplified to
 Is it [Normalizr](https://github.com/gaearon/normalizr)? No. Normalizr requires schemas, object ID's and works primarily with collections of objects.
 
 Simplifr is schema agnostic and works with arbitrary JSON.
-
-Simplifr also has `reducers` implementation for `simplified data` as well as for `raw data`. Check Api Reference below.
 
 ## Usage with React/Redux
 
@@ -191,9 +213,10 @@ function reducer(state = {}, action){
   const { path, value } = action
   switch (action.type) {
     case 'UPDATE':
-      // use simplifr `update` function
-      // in general, `value` can take any JSON
-      return update(Object.assign({}, state), path, value) 
+      return Object.assign({}, state, {[path]: value}) 
+      // in general, use simplifr `update` function
+      // where `value` can take any JSON
+      //return update(Object.assign({}, state), path, value) 
     default:
       return state
   }
