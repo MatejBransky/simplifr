@@ -32,7 +32,11 @@ return update(state, {
 ```
 check [update](http://facebook.github.io/react/docs/update.html) for more details.
 
+Simplifr offers a super easy way to communicate between components and Redux store, and to create a complex nested component based on a single store.
 This idea can be easily extended for multiple reducers with different paths, check [redux-simplifr](https://github.com/krispo/redux-simplifr) for more details.
+
+Disadvantage of this approach is a possible long `path` keys, that may extremely increase the data size. 
+Possible solution is to encode `paths` with a short identifiers. But it may be the work for the future...   
 
 ## How it works
 
