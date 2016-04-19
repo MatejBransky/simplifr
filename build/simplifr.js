@@ -1,4 +1,4 @@
-/* Simplifr, v0.2.0 */
+/* Simplifr, v0.2.1 */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
   typeof define === 'function' && define.amd ? define(['exports'], factory) :
@@ -38,6 +38,7 @@
     else if (node.type === 'object') {
       var keys = Object.keys(obj);
       keys.forEach(function(key){
+        if (node.childs.indexOf(key) > -1) return;
         node.childs.push(key);
         simplifyNode(data, path + dilimiter + key, obj[key], dilimiter);
       });

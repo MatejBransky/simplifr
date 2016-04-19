@@ -31,6 +31,7 @@ export function add(data, path, obj, dilimiter){
   else if (node.type === 'object') {
     var keys = Object.keys(obj);
     keys.forEach(function(key){
+      if (node.childs.indexOf(key) > -1) return;
       node.childs.push(key);
       simplifyNode(data, path + dilimiter + key, obj[key], dilimiter);
     });

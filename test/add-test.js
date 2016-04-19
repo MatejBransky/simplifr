@@ -147,6 +147,74 @@ test('-= add tests =-', function(t){
     t.end();
   });
 
+  t.test('add simple duplicated node to the object ', function(t){
+    var json = {
+      foo: {
+        bar: {
+          buz: 3
+        }
+      }
+    };
+    var path = 'root.foo.bar';
+    var obj =  { buz: 5 };
+
+    // add `obj` to the `path` node
+    // the result is equivalent to
+    //{
+    //  foo: {
+    //    bar: {
+    //      buz: 3
+    //    }
+    //  }
+    //}
+    var res = {
+      'root': { type: 'object', childs: ['foo']},
+      'root.foo': { type: 'object', childs: ['bar']},
+      'root.foo.bar': { type: 'object', childs: ['buz']},
+      'root.foo.bar.buz': 3
+    }
+    var data = simplify(json);
+    t.deepEqual(add(data, path, obj), res);
+    t.deepEqual(data, res);
+    t.end();
+  });
+
+  t.test('add simple duplicated nodes to the object ', function(t){
+    var json = {
+      foo: {
+        bar: {
+          buz: 3
+        }
+      }
+    };
+    var path = 'root.foo.bar';
+    var obj =  { tat: 5, buz: 'om', cit: 'nam' };
+
+    // add `obj` to the `path` node
+    // the result is equivalent to
+    //{
+    //  foo: {
+    //    bar: {
+    //      buz: 3,
+    //      tat: 5,
+    //      cit: 'nam'
+    //    }
+    //  }
+    //}
+    var res = {
+      'root': { type: 'object', childs: ['foo']},
+      'root.foo': { type: 'object', childs: ['bar']},
+      'root.foo.bar': { type: 'object', childs: ['buz', 'tat', 'cit']},
+      'root.foo.bar.buz': 3,
+      'root.foo.bar.tat': 5,
+      'root.foo.bar.cit': 'nam'
+    }
+    var data = simplify(json);
+    t.deepEqual(add(data, path, obj), res);
+    t.deepEqual(data, res);
+    t.end();
+  });
+
   // Add complex nodes
   t.test('add complex single node to the object ', function(t){
     var json = {
