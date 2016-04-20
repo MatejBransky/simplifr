@@ -2,6 +2,8 @@
 Simplifies arbitrary JSON data into a flat single-level (path -> description) structure.
 It's designed for React/Redux/Flux apps. Inspired by [Normalizr](https://github.com/gaearon/normalizr).
 
+> Important NOTE: It's an `experimental` project base on experimental ideas of how we can transform the entire state structure to simplify the way of communicating between components with a complex data store in React apps
+
 ## Install
 
     npm install --save simplifr
