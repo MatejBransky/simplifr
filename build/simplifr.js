@@ -27,7 +27,7 @@
       return data;
 
     if (node.type === 'array') {
-      var max = Math.max.apply(null, node.childs);
+      var max = !node.childs.length ? -1 : Math.max.apply(null, node.childs);
       if (!isArray(obj)) obj = [obj];
       obj.forEach(function(d){
         node.childs.push(++max);
