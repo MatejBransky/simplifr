@@ -112,6 +112,34 @@ test('-= add tests =-', function(t){
     t.end();
   });
 
+  t.test('add simple single node to an EMPTY array ', function(t){
+    var json = {
+      foo: {
+        bar: []
+      }
+    };
+    var path = 'root.foo.bar';
+    var obj =  'sat';
+
+    // add `obj` to the `path` node
+    // the result is equivalent to
+    //{
+    //  foo: {
+    //    bar: [ 'sat' ]
+    //  }
+    //}
+    var res = {
+      'root': { type: 'object', childs: ['foo']},
+      'root.foo': { type: 'object', childs: ['bar']},
+      'root.foo.bar': { type: 'array', childs: [0]},
+      'root.foo.bar.0': 'sat'
+    }
+    var data = simplify(json);
+    t.deepEqual(add(data, path, obj), res);
+    t.deepEqual(data, res);
+    t.end();
+  });
+
   t.test('add array of simple nodes to the array ', function(t){
     var json = {
       foo: {
